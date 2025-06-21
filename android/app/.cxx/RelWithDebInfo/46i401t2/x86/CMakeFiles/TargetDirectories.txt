@@ -1,0 +1,2 @@
+D:/New_Application/shopping_app/android/app/.cxx/RelWithDebInfo/46i401t2/x86/CMakeFiles/edit_cache.dir
+D:/New_Application/shopping_app/android/app/.cxx/RelWithDebInfo/46i401t2/x86/CMakeFiles/rebuild_cache.dir

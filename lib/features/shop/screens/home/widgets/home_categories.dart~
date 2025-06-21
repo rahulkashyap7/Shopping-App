@@ -1,0 +1,28 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:shopping_app/features/shop/screens/sub_categories/sub_categories.dart';
+import '../../../../../common/widgets/image_text_widgets/vertical_image_text.dart';
+import '../../../../../utils/constants/image_strings.dart';
+
+
+class RHomeCategories extends StatelessWidget {
+  const RHomeCategories({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 80,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: 6,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (_, index) {
+          return RVerticalImageText(image: RImages.shoeIcon, title: 'Shoes', onTap: () => Get.to(() => SubCategoriesScreen()));
+        },
+      ),
+    );
+  }
+}

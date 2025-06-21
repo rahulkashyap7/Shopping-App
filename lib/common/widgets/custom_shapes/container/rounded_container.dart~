@@ -1,0 +1,14 @@
+
+
+class RRoundedContainer extends StatelessWidget {
+  const RRoundedContainer({
+    super.key,
+    this.child,
+    this.width,
+    this.height,
+    this.margin,
+    this.padding,
+    this.showBorder = false,
+    this.radius = RSizes.cardRadiusLg,
+  });
+}

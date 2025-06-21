@@ -1,0 +1,13 @@
+import 'package:flutter/material.dart';
+
+class RBottomSheetTheme {
+  RBottomSheetTheme._();
+
+  static BottomSheetThemeData lightBottomSheetTheme = BottomSheetThemeData(
+    showDragHandle: true,
+    backgroundColor: Colors.white,
+    modalBackgroundColor: Colors.white,
+    constraints: const BoxConstraints(minWidth: double.infinity),
+    shape: RoundedRectangleBorder(boderRadius: BorderRadius.circular(16.0)),
+  );
+}
