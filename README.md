@@ -18,31 +18,14 @@ A modern Flutter implementation of e-commerce UI with premium design elements an
 - Android
 - iOS
 
-## 🛠️ Project Structure
-shopping_app/
-├── lib/
-│   ├── features/        # Feature modules
-│   │   ├── authentication/  # Auth screens
-│   │   ├── personalization/ # User profile
-│   │   └── shop/           # Product-related screens
-│   ├── common/          # Reusable components
-│   │   ├── widgets/     # Custom widgets
-│   │   └── styles/      # App themes
-│   ├── utils/           # Helper functions
-│   │   ├── constants/   # App constants
-│   │   ├── validators/  # Form validation
-│   │   └── theme/       # Theme configuration
-│   ├── models/          # Data models
-│   │   ├── product.dart  # Product model
-│   │   └── user.dart     # User model
-│   ├── services/        # Network and API services
-│   │   ├── api.dart     # API client
-│   │   ├── cart.dart    # Cart service
-│   │   ├── auth.dart    # Auth service
-│   │   ├── user.dart    # User service
-│   │   └── order.dart   # Order service
-│   └── main.dart        # App entry point
 
+## 🛠️ Project Structure
+
+Key directories:
+- `lib/features/`: Contains isolated feature modules
+- `lib/common/`: Shared components and styles
+- `assets/images/`: Organized by image type and purpose
+- Platform directories: Android/iOS/Web specific configurations
 
 ## ⚙️ Prerequisites
 - Flutter 3.0+
