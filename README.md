@@ -1,6 +1,6 @@
 # Shopping App UI
 
-![Project Banner]([assets\images\banners\banner1.png](https://codingwitht.com/wp-content/uploads/2025/04/buy-eCommerce-App-and-launch-your-business-in-minutes.avif))
+![Project Banner](https://codingwitht.com/wp-content/uploads/2025/04/buy-eCommerce-App-and-launch-your-business-in-minutes.avif)
 
 A modern Flutter implementation of e-commerce UI with premium design elements and smooth interactions.
 
