@@ -1,6 +1,6 @@
 # Shopping App UI
 
-![Project Banner](assets/images/banners/app_banner.png)
+![Project Banner](assets\images\banners\banner1.png)
 
 A modern Flutter implementation of e-commerce UI with premium design elements and smooth interactions.
 
