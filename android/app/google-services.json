@@ -1,51 +1,26 @@
 {
   "project_info": {
-    "project_number": "428737400126",
-    "project_id": "shoppingapp-a4ee9",
-    "storage_bucket": "shoppingapp-a4ee9.firebasestorage.app"
+    "project_number": "901228709580",
+    "project_id": "shopping-app-1e6f6",
+    "storage_bucket": "shopping-app-1e6f6.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:428737400126:android:d23a8ca8f426d6708cb06f",
+        "mobilesdk_app_id": "1:901228709580:android:bb7689b6206f770ce56469",
         "android_client_info": {
           "package_name": "com.kashyap_app.shopping_app"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "428737400126-69g6snhnl25s2rq5bk4gk2337s8cb05i.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.kashyap_app.shopping_app",
-            "certificate_hash": "5ba55a6346c4d5072e1dd08c83fa99f7cd95b38a"
-          }
-        },
-        {
-          "client_id": "428737400126-s0u9bhlhubhr7ran64ctp7qv5i6plumo.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAF11olJRn1N3TT4UKi-eZGcsT5_j8cU-U"
+          "current_key": "AIzaSyA4VES1fMMmc52yLcPSgmfXkyBVRlGPG7k"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "428737400126-s0u9bhlhubhr7ran64ctp7qv5i6plumo.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "428737400126-85ld5vms0r5vdesvl839h4optusejikn.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.kashyapapp.shoppingApp"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
