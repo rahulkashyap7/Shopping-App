@@ -15,11 +15,14 @@ class NetworkManager extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _connectivitySubscription = _connectivity.onConnectivityChanged.listen((result) => _updateConnectionStatus(result.first));
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }
 
   // Update the connection status based on changes in connectivity and show a relevant popup for no internet connection.
-  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+  Future<void> _updateConnectionStatus(List<ConnectivityResult> results) async {
+    // Use the first result from the list
+    final result = results.isNotEmpty ? results.first : ConnectivityResult.none;
     _connectionStatus.value = result;
     if (_connectionStatus.value == ConnectivityResult.none) {
       RLoaders.warningSnackBar(title: 'No Internet Connection');
@@ -44,6 +47,7 @@ class NetworkManager extends GetxController {
   /// Dispose or close the active connectivity stream.
   @override
   void onClose() {
+    super.onClose();
     _connectivitySubscription.cancel();
   }
 }

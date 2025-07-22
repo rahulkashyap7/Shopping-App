@@ -72,6 +72,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '901228709580',
     projectId: 'shopping-app-1e6f6',
     storageBucket: 'shopping-app-1e6f6.firebasestorage.app',
+    iosClientId: '901228709580-ld7g181ge4tcaomv7l1ssq8bt3pko2hc.apps.googleusercontent.com',
     iosBundleId: 'com.kashyapapp.shoppingApp',
   );
 

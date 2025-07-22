@@ -6,7 +6,6 @@ import '../../../utils/constants/sizes.dart';
 import '../../../utils/constants/text_strings.dart';
 import '../../../utils/helpers/helper_function.dart';
 
-
 class RTermsAndConditionCheckbox extends StatelessWidget {
   const RTermsAndConditionCheckbox({
     super.key,
@@ -15,11 +14,16 @@ class RTermsAndConditionCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = RHelperFunctions.isDarkMode(context);
-    final controller = SignupController.instance;
+    final controller = Get.find<SignupController>();
     return Row(
       children: [
         SizedBox(
-            width: 24, height: 24, child: Obx(() => Checkbox(value: controller.privacyPolicy.value, onChanged: (value) => controller.privacyPolicy.value = !controller.privacyPolicy.value))),
+            width: 24,
+            height: 24,
+            child: Obx(() => Checkbox(
+                value: controller.privacyPolicy.value,
+                onChanged: (value) => controller.privacyPolicy.value =
+                    !controller.privacyPolicy.value))),
         const SizedBox(width: RSizes.sm),
         Text.rich(TextSpan(children: [
           TextSpan(
@@ -28,22 +32,20 @@ class RTermsAndConditionCheckbox extends StatelessWidget {
           TextSpan(
               text: '${RTexts.privacyPolicy} ',
               style: Theme.of(context).textTheme.bodyMedium!.apply(
-                color: dark ? RColors.white : RColors.primary,
-                decoration: TextDecoration.underline,
-                decorationColor:
-                dark ? RColors.white : RColors.primary,
-              )),
+                    color: dark ? RColors.white : RColors.primary,
+                    decoration: TextDecoration.underline,
+                    decorationColor: dark ? RColors.white : RColors.primary,
+                  )),
           TextSpan(
               text: '${RTexts.and} ',
               style: Theme.of(context).textTheme.bodySmall),
           TextSpan(
               text: '${RTexts.termsOfUse} ',
               style: Theme.of(context).textTheme.bodyMedium!.apply(
-                color: dark ? RColors.white : RColors.primary,
-                decoration: TextDecoration.underline,
-                decorationColor:
-                dark ? RColors.white : RColors.primary,
-              )),
+                    color: dark ? RColors.white : RColors.primary,
+                    decoration: TextDecoration.underline,
+                    decorationColor: dark ? RColors.white : RColors.primary,
+                  )),
         ]))
       ],
     );

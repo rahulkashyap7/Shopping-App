@@ -17,7 +17,7 @@ class SignUpForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SignupController());
+    final controller = Get.find<SignupController>();
     final dark = RHelperFunctions.isDarkMode(context);
     return Form(
       key: controller.signupFormKey,
@@ -29,7 +29,8 @@ class SignUpForm extends StatelessWidget {
               Expanded(
                 child: TextFormField(
                   controller: controller.firstName,
-                  validator: (value) => RValidator.validateEmptyText('First Name', value),
+                  validator: (value) =>
+                      RValidator.validateEmptyText('First Name', value),
                   expands: false,
                   decoration: InputDecoration(
                       labelText: RTexts.firstName,
@@ -40,7 +41,8 @@ class SignUpForm extends StatelessWidget {
               Expanded(
                 child: TextFormField(
                   controller: controller.lastName,
-                  validator: (value) => RValidator.validateEmptyText('Last Name', value),
+                  validator: (value) =>
+                      RValidator.validateEmptyText('Last Name', value),
                   expands: false,
                   decoration: InputDecoration(
                       labelText: RTexts.lastName,
@@ -54,7 +56,8 @@ class SignUpForm extends StatelessWidget {
           // Username
           TextFormField(
             controller: controller.username,
-            validator: (value) => RValidator.validateEmptyText('Username', value),
+            validator: (value) =>
+                RValidator.validateEmptyText('Username', value),
             expands: false,
             decoration: InputDecoration(
                 labelText: RTexts.username,
@@ -74,8 +77,8 @@ class SignUpForm extends StatelessWidget {
 
           // Phone Number
           TextFormField(
-            validator: (value) => RValidator.validatePhoneNumber(value),
             controller: controller.phoneNumber,
+            validator: (value) => RValidator.validatePhoneNumber(value),
             expands: false,
             decoration: InputDecoration(
                 labelText: RTexts.phoneNo, prefixIcon: Icon(Iconsax.call)),
@@ -91,7 +94,12 @@ class SignUpForm extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: RTexts.password,
                 prefixIcon: const Icon(Iconsax.password_check),
-                suffixIcon: IconButton(onPressed: () => controller.hidePassword.value = !controller.hidePassword.value, icon: Icon(controller.hidePassword.value ? Iconsax.eye_slash : Iconsax.eye)),
+                suffixIcon: IconButton(
+                    onPressed: () => controller.hidePassword.value =
+                        !controller.hidePassword.value,
+                    icon: Icon(controller.hidePassword.value
+                        ? Iconsax.eye_slash
+                        : Iconsax.eye)),
               ),
             ),
           ),
@@ -103,15 +111,14 @@ class SignUpForm extends StatelessWidget {
           const SizedBox(height: RSizes.spaceBtwSections),
           // SignUp Button
           SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
+            width: double.infinity,
+            child: ElevatedButton(
               onPressed: () => controller.signup(),
               child: const Text(RTexts.createAccount),
-              ),
+            ),
           ),
         ],
       ),
     );
   }
 }
-

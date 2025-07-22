@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopping_app/common/widgets/login_signup/form_divider.dart';
+import 'package:shopping_app/features/authentication/controls/signup/signup_controller.dart';
 import 'package:shopping_app/features/authentication/screens/signup/widgets/signup_form.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 import 'package:shopping_app/utils/constants/text_strings.dart';
@@ -12,6 +13,9 @@ class SignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Initialize the signup controller
+    Get.put(SignupController());
+
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -28,7 +32,6 @@ class SignupScreen extends StatelessWidget {
               SignUpForm(),
               const SizedBox(height: RSizes.spaceBtwSections),
 
-
               // Divider
               FormDivider(dividerText: RTexts.orSignUpWith.capitalize!),
               const SizedBox(height: RSizes.spaceBtwSections),
@@ -42,4 +45,3 @@ class SignupScreen extends StatelessWidget {
     );
   }
 }
-

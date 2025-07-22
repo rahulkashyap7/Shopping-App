@@ -20,8 +20,10 @@ class SignupController extends GetxController {
   final username = TextEditingController(); // Controller for username input
   final password = TextEditingController(); // Controller for password input
   final firstName = TextEditingController(); // Controller for firstName input
-  final phoneNumber = TextEditingController(); // Controller for phone Number input
-  GlobalKey<FormState> signupFormKey = GlobalKey<FormState>(); // Form key for form validation
+  final phoneNumber =
+      TextEditingController(); // Controller for phone Number input
+  GlobalKey<FormState> signupFormKey =
+      GlobalKey<FormState>(); // Form key for form validation
 
   /// -- SignUp
   void signup() async {
@@ -33,22 +35,26 @@ class SignupController extends GetxController {
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) return;
 
-      // Form Validation
-      if(signupFormKey.currentState!.validate()) return;
+      // Form Validation - Check this first before showing loader
+      if (!signupFormKey.currentState!.validate()) return;
+
 
       // Privacy policy Check
       if (!privacyPolicy.value) {
-        RLoaders.warningSnackBar(title: 'Accept Privacy Policy',
+        RLoaders.warningSnackBar(
+            title: 'Accept Privacy Policy',
             message: 'In order to create account, you must to read and accept the Privacy Policy & Terms of Use.');
         return;
       }
 
       // Register user in the Firebase Authentication & save user data in the firebase
-     final user = await AuthenticationRepository.instance.registerWithEmailAndPassword(email.text.trim(), password.text.trim());
+      final userCredential = await AuthenticationRepository.instance
+          .registerWithEmailAndPassword(
+              email.text.trim(), password.text.trim());
 
       // save Authenticate user data in the Firebase Firestore
       final newUser = UserModel(
-        id: user.user!.uid,
+        id: userCredential.user!.uid,
         firstName: firstName.text.trim(),
         lastName: lastName.text.trim(),
         username: username.text.trim(),
@@ -64,14 +70,18 @@ class SignupController extends GetxController {
       RFullScreenLoader.stopLoading();
 
       // Show Success Message
-      RLoaders.successSnackBar(title: 'Congratulations', message: 'Your account has been created! Verify email to continue.');
+      RLoaders.successSnackBar(
+          title: 'Congratulations',
+          message: 'Your account has been created! Verify email to continue.');
 
       // Move to verify Email Screen
       Get.to(() => VerifyEmailScreen(email: email.text.trim()));
-
     } catch (e) {
       // Show some Generic Error to the user
       RLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+    } finally {
+      // Remove loading
+      RFullScreenLoader.stopLoading();
     }
   }
 }

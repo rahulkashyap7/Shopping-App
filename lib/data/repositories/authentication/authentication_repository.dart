@@ -38,7 +38,7 @@ class AuthenticationRepository extends GetxController {
     } else {
       // Local Storage
       deviceStorage.writeIfNull('IsFirstTime', true);
-      // Check is It's teh first time launching the app
+      // Check is It's the first time launching the app
       deviceStorage.read('IsFirstTime') != true
           ? Get.offAll(() => const LoginScreen()) // Redirect to Login Screen if not the first time
           : Get.offAll(() => const OnBoardingScreen()); // Redirect to OnBoarding Screen if it's the first time
