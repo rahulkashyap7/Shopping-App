@@ -69,7 +69,7 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-// [ReAuthentication] - ReAuthenticate user
+// [EmailVerification] - Mail Verification
 Future<void> sendEmailVerification() async {
   try {
     await _auth.currentUser?.sendEmailVerification();
@@ -86,13 +86,14 @@ Future<void> sendEmailVerification() async {
   }
 }
 
-// [EmailVerification] - Mail Verification
+// [ReAuthentication] - ReAuthenticate user
 
 // [EmailAuthentication] - Forget Password
 
 /*------------ Federated identity & social sign-in ---------------*/
 
 // [GoogleAuthentication] - Google Sign in
+
 // [FacebookAuthentication] - Facebook Sign in
 
 // [LogOut User] - Void for my authentication.

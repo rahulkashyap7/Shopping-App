@@ -35,7 +35,7 @@ class SignupController extends GetxController {
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) return;
 
-      // Form Validation - Check this first before showing loader
+      // Form Validation
       if (!signupFormKey.currentState!.validate()) return;
 
 
@@ -48,9 +48,7 @@ class SignupController extends GetxController {
       }
 
       // Register user in the Firebase Authentication & save user data in the firebase
-      final userCredential = await AuthenticationRepository.instance
-          .registerWithEmailAndPassword(
-              email.text.trim(), password.text.trim());
+      final userCredential = await AuthenticationRepository.instance.registerWithEmailAndPassword(email.text.trim(), password.text.trim());
 
       // save Authenticate user data in the Firebase Firestore
       final newUser = UserModel(
@@ -71,8 +69,7 @@ class SignupController extends GetxController {
 
       // Show Success Message
       RLoaders.successSnackBar(
-          title: 'Congratulations',
-          message: 'Your account has been created! Verify email to continue.');
+          title: 'Congratulations', message: 'Your account has been created! Verify email to continue.');
 
       // Move to verify Email Screen
       Get.to(() => VerifyEmailScreen(email: email.text.trim()));
