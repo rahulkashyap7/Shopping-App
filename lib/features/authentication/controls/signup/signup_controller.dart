@@ -29,7 +29,8 @@ class SignupController extends GetxController {
   void signup() async {
     try {
       // Start Loading
-      RFullScreenLoader.openLoadingDialog('We are processing your information...', RImages.docerAnimation);
+      RFullScreenLoader.openLoadingDialog(
+          'We are processing your information...', RImages.docerAnimation);
 
       // Check Internet Connection
       final isConnected = await NetworkManager.instance.isConnected();
@@ -38,17 +39,19 @@ class SignupController extends GetxController {
       // Form Validation
       if (!signupFormKey.currentState!.validate()) return;
 
-
       // Privacy policy Check
       if (!privacyPolicy.value) {
         RLoaders.warningSnackBar(
             title: 'Accept Privacy Policy',
-            message: 'In order to create account, you must to read and accept the Privacy Policy & Terms of Use.');
+            message:
+                'In order to create account, you must to read and accept the Privacy Policy & Terms of Use.');
         return;
       }
 
       // Register user in the Firebase Authentication & save user data in the firebase
-      final userCredential = await AuthenticationRepository.instance.registerWithEmailAndPassword(email.text.trim(), password.text.trim());
+      final userCredential = await AuthenticationRepository.instance
+          .registerWithEmailAndPassword(
+              email.text.trim(), password.text.trim());
 
       // save Authenticate user data in the Firebase Firestore
       final newUser = UserModel(
@@ -69,10 +72,12 @@ class SignupController extends GetxController {
 
       // Show Success Message
       RLoaders.successSnackBar(
-          title: 'Congratulations', message: 'Your account has been created! Verify email to continue.');
+          title: 'Congratulations',
+          message: 'Your account has been created! Verify email to continue.');
 
       // Move to verify Email Screen
-      Get.to(() => VerifyEmailScreen(email: email.text.trim()));
+      print('Navigating to VerifyEmailScreen with email: ${email.text.trim()}');
+      Get.offAll(() => VerifyEmailScreen(email: email.text.trim()));
     } catch (e) {
       // Show some Generic Error to the user
       RLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());

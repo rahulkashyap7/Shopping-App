@@ -7,9 +7,9 @@ import '../../../../data/repositories/authentication/authentication_repository.d
 import '../../../../utils/check_conncetion/network_manager.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/popups/full_screen_loader.dart';
+import '../../../personalization/controls/user_controller.dart';
 
 class LoginController extends GetxController {
-
   // Variables
   final rememberMe = false.obs;
   final hidePassword = true.obs;
@@ -18,11 +18,10 @@ class LoginController extends GetxController {
   final password = TextEditingController();
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
-
   @override
   void onInit() {
-    email.text = localStorage.read("REMEMBER_ME_EMAIL");
-    password.text = localStorage.read("REMEMBER_ME_PASSWORD");
+    email.text = localStorage.read("REMEMBER_ME_EMAIL") ?? "";
+    password.text = localStorage.read("REMEMBER_ME_PASSWORD") ?? "";
     super.onInit();
   }
 
@@ -64,6 +63,48 @@ class LoginController extends GetxController {
     } catch (e) {
       RFullScreenLoader.stopLoading();
       RLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
+    }
+  }
+
+  /// -- Google SignIN Authentication
+  Future<void> googleSignIn() async {
+    try {
+      // Start Loading
+      RFullScreenLoader.openLoadingDialog(
+          'Logging you in...', RImages.docerAnimation);
+
+      // check Internet Connection
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        RFullScreenLoader.stopLoading();
+        return;
+      }
+
+      // Google Authentication
+      final userCredentials =
+          await AuthenticationRepository.instance.signInWithGoogle();
+
+      // Check if user cancelled the sign-in
+      if (userCredentials == null) {
+        RFullScreenLoader.stopLoading();
+        return; // User cancelled, don't show error
+      }
+
+      // Initialize UserController before saving user records
+      Get.put(UserController());
+
+      // save User Records
+      await UserController.instance.saveUserRecord(userCredentials);
+
+      // Stop Loading
+      RFullScreenLoader.stopLoading();
+
+      // Redirect
+      AuthenticationRepository.instance.screenRedirect();
+    } catch (e) {
+      // Remove Loader
+      RFullScreenLoader.stopLoading();
+      RLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }
 }

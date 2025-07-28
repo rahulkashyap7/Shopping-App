@@ -9,7 +9,6 @@ import '../../../../../utils/validators/validation.dart';
 import '../../../controls/login/login_controller.dart';
 import '../../password_configuration/forget_password.dart';
 
-
 class LoginForm extends StatelessWidget {
   const LoginForm({
     super.key,
@@ -17,12 +16,13 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(LoginController());
+    final controller = Get.find<LoginController>();
 
     return Form(
-      key: controller.loginFormKey,
+        key: controller.loginFormKey,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: RSizes.spaceBtwSections),
+          padding:
+              const EdgeInsets.symmetric(vertical: RSizes.spaceBtwSections),
           child: Column(
             children: [
               // Email
@@ -37,7 +37,7 @@ class LoginForm extends StatelessWidget {
 
               // Password
               Obx(
-                    () => TextFormField(
+                () => TextFormField(
                   controller: controller.password,
                   validator: (value) => RValidator.validatePassword(value),
                   obscureText: controller.hidePassword.value,
@@ -46,7 +46,7 @@ class LoginForm extends StatelessWidget {
                     prefixIcon: const Icon(Iconsax.password_check),
                     suffixIcon: IconButton(
                         onPressed: () => controller.hidePassword.value =
-                        !controller.hidePassword.value,
+                            !controller.hidePassword.value,
                         icon: Icon(controller.hidePassword.value
                             ? Iconsax.eye_slash
                             : Iconsax.eye)),
@@ -62,23 +62,35 @@ class LoginForm extends StatelessWidget {
                   // Remember Me
                   Row(
                     children: [
-                      Obx(() => Checkbox(value: controller.rememberMe.value, onChanged: (value) => controller.rememberMe.value = !controller.rememberMe.value)),
+                      Obx(() => Checkbox(
+                          value: controller.rememberMe.value,
+                          onChanged: (value) => controller.rememberMe.value =
+                              !controller.rememberMe.value)),
                       const Text(RTexts.rememberMe),
                     ],
                   ),
 
                   // Forget Password
                   TextButton(
-                      onPressed: () => Get.to(() => ForgetPassword()), child: Text(RTexts.forgetPassword)),
+                      onPressed: () => Get.to(() => ForgetPassword()),
+                      child: Text(RTexts.forgetPassword)),
                 ],
               ),
               const SizedBox(height: RSizes.spaceBtwSections),
 
               // Sign In Btn
-              SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => controller.emailAndPasswordSignIn(), child: Text(RTexts.logIn))),
+              SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                      onPressed: () => controller.emailAndPasswordSignIn(),
+                      child: Text(RTexts.logIn))),
               const SizedBox(height: RSizes.spaceBtwItems),
 
-              SizedBox(width: double.infinity, child: OutlinedButton(onPressed: () => Get.to(() => SignupScreen()), child: Text(RTexts.createAccount))),
+              SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                      onPressed: () => Get.to(() => SignupScreen()),
+                      child: Text(RTexts.createAccount))),
             ],
           ),
         ));

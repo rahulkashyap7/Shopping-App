@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "901228709580-vr5ncadfu5rpdj32oqcmtfjs9rm3rep9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kashyap_app.shopping_app",
+            "certificate_hash": "5ba55a6346c4d5072e1dd08c83fa99f7cd95b38a"
+          }
+        },
+        {
           "client_id": "901228709580-rcv27vhth1mu0d5m0qnmrb0p8osrmhtc.apps.googleusercontent.com",
           "client_type": 3
         }
