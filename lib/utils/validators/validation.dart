@@ -19,7 +19,6 @@ class RValidator {
     if (!emailRegExp.hasMatch(value)) {
       return 'Invalid email address.';
     }
-
     return null;
   }
 
