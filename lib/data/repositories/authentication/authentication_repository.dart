@@ -13,6 +13,7 @@ import '../../../utils/exceptions/firebase_auth_exceptions.dart';
 import '../../../utils/exceptions/firebase_exceptions.dart';
 import '../../../utils/exceptions/format_exceptions.dart';
 import '../../../utils/exceptions/platform_exceptions.dart';
+import '../user/user_repository.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
@@ -20,6 +21,9 @@ class AuthenticationRepository extends GetxController {
   // Variables
   final deviceStorage = GetStorage();
   final _auth = FirebaseAuth.instance;
+
+  // Get Authenticated User Data
+  User? get authUser => _auth.currentUser;
 
 // Called from main.dart on app launch
   @override
@@ -124,7 +128,27 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-// [ReAuthentication] - ReAuthenticate user
+  /// [ReAuthenticate] - RE AUTHENTICATE USER
+  Future<void> reAuthenticateWithEmailAndPassword(String email, String password) async {
+    try {
+      // Create a credential
+      AuthCredential credential = EmailAuthProvider.credential(email: email, password: password);
+
+      // ReAuthenticate
+      await _auth.currentUser!.reauthenticateWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      throw RFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw RFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const RFormatException();
+    } on PlatformException catch (e) {
+      throw RPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
 
 
 
@@ -181,5 +205,23 @@ class AuthenticationRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
-// Delete User - remove user auth and Firestore account.
+
+  /// DELETE USER - Remove user Auth and Firestore Account.
+  Future<void> deleteAccount() async {
+    try {
+      await UserRepository.instance.removeUserRecord(_auth.currentUser!.uid);
+      await _auth.currentUser?.delete();
+    } on FirebaseAuthException catch (e) {
+      throw RFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw RFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const RFormatException();
+    } on PlatformException catch (e) {
+      throw RPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
 }

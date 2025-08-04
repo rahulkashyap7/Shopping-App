@@ -76,6 +76,7 @@ class LoginForm extends StatelessWidget {
                       child: Text(RTexts.forgetPassword)),
                 ],
               ),
+
               const SizedBox(height: RSizes.spaceBtwSections),
 
               // Sign In Btn
