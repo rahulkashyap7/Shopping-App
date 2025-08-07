@@ -68,7 +68,7 @@ class UpdateNameController extends GetxController {
       RLoaders.successSnackBar(
           title: 'Congratulations', message: 'Your Name has been updated.');
 
-      // MOve to previous screen
+      // Move to previous screen
       Get.off(() => const ProfileScreen());
     } catch (e) {
       RFullScreenLoader.stopLoading();

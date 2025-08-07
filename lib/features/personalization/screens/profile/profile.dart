@@ -32,10 +32,20 @@ class ProfileScreen extends StatelessWidget {
                 width: double.infinity,
                 child: Column(
                   children: [
-                    RCircularImage(
-                        image: RImages.userPic, width: 80, height: 80),
+                    Obx(() {
+                      final networkImage = controller.user.value.profilePicture;
+                      final image = networkImage.isNotEmpty
+                          ? networkImage
+                          : RImages.userPic;
+                      return RCircularImage(
+                          image: image,
+                          width: 80,
+                          height: 80,
+                          isNetworkImage: networkImage.isNotEmpty);
+                    }),
                     TextButton(
-                        onPressed: () {}, child: Text('Change Profile Picture'))
+                        onPressed: () => controller.uploadUserProfilePicture(),
+                        child: Text('Change Profile Picture'))
                   ],
                 ),
               ),
@@ -44,28 +54,51 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: RSizes.spaceBtwItems / 2),
               const Divider(),
               const SizedBox(height: RSizes.spaceBtwItems),
-              RSectionHeading(title: 'Profile Information', showActionButton: false),
+              RSectionHeading(
+                  title: 'Profile Information', showActionButton: false),
               const SizedBox(height: RSizes.spaceBtwItems),
 
-              RProfileMenu(title: 'Name', value: controller.user.value.fullName, onPressed: () => Get.to(() => const ChangeName())),
-              RProfileMenu(onPressed: () {}, title: 'Username', value: controller.user.value.username),
+              RProfileMenu(
+                  title: 'Name',
+                  value: controller.user.value.fullName,
+                  onPressed: () => Get.to(() => const ChangeName())),
+              RProfileMenu(
+                  onPressed: () {},
+                  title: 'Username',
+                  value: controller.user.value.username),
 
               const SizedBox(height: RSizes.spaceBtwItems),
               const Divider(),
               const SizedBox(height: RSizes.spaceBtwItems),
 
               // Heading Personal info
-              RProfileMenu(title: 'User ID', value: controller.user.value.id, onPressed: () {}, icon: Iconsax.copy),
-              RProfileMenu(title: 'Email', value: controller.user.value.email, onPressed: () {}),
-              RProfileMenu(title: 'Phone No.', value: controller.user.value.phoneNumber, onPressed: () {}),
+              RProfileMenu(
+                  title: 'User ID',
+                  value: controller.user.value.id,
+                  onPressed: () {},
+                  icon: Iconsax.copy),
+              RProfileMenu(
+                  title: 'Email',
+                  value: controller.user.value.email,
+                  onPressed: () {}),
+              RProfileMenu(
+                  title: 'Phone No.',
+                  value: controller.user.value.phoneNumber,
+                  onPressed: () {}),
               RProfileMenu(title: 'Gender', value: 'Male', onPressed: () {}),
-              RProfileMenu(title: 'Date of Birth', value: '16 August 2002', onPressed: () {}),
+              RProfileMenu(
+                  title: 'Date of Birth',
+                  value: '16 August 2002',
+                  onPressed: () {}),
 
               const Divider(),
               const SizedBox(height: RSizes.spaceBtwItems),
-              
+
               Center(
-                child: TextButton(onPressed: () => controller.deleteAccountWarningPopup(), child: Text('Close Account', style: TextStyle(color: Colors.red))),
+                child: TextButton(
+                    onPressed: () => controller.deleteAccountWarningPopup(),
+                    child: Text('Close Account',
+                        style: TextStyle(color: Colors.red))),
               )
             ],
           ),
@@ -74,4 +107,3 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
-
