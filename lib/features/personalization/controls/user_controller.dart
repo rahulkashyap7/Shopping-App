@@ -1,12 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shopping_app/common/widgets/loaders/loaders.dart';
 import 'package:shopping_app/data/repositories/user/user_repository.dart';
-
 import '../../../data/repositories/authentication/authentication_repository.dart';
 import '../../../data/repositories/user/user_model.dart';
 import '../../../utils/check_conncetion/network_manager.dart';
