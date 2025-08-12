@@ -6,6 +6,7 @@ import 'package:shopping_app/common/widgets/custom_shapes/container/search_conta
 import 'package:shopping_app/common/widgets/layouts/grid_layout.dart';
 import 'package:shopping_app/common/widgets/product_cart/cart_menu_icon.dart';
 import 'package:shopping_app/common/widgets/texts/section_heading.dart';
+import 'package:shopping_app/features/shop/controls/category_controller.dart';
 import 'package:shopping_app/features/shop/screens/store/widgets/category_tab.dart';
 import 'package:shopping_app/utils/constants/colors.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
@@ -18,8 +19,9 @@ class StoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categories = CategoryController.instance.featuredCategories;
     return DefaultTabController(
-      length: 5,
+      length: categories.length,
       child: Scaffold(
         appBar: RAppBar(
           title:
@@ -72,17 +74,13 @@ class StoreScreen extends StatelessWidget {
                     ),
 
                     // Tabs
-                    bottom: RTabBar(tabs: [
-                      Tab(child: Text('Sports')),
-                      Tab(child: Text('Furniture')),
-                      Tab(child: Text('Electronics')),
-                      Tab(child: Text('Clothes')),
-                      Tab(child: Text('Cosmetics')),
-                    ]))
-              ];
-            },
-            body: const TabBarView(children: [RCategoryTab(), RCategoryTab(), RCategoryTab(), RCategoryTab(), RCategoryTab(),
-            ]
+                bottom: RTabBar(
+                    tabs: categories.map((category) => Tab(child: Text(category.name))).toList()),
+              ),
+            ];
+          },
+          body: TabBarView(
+              children: categories.map((category) => RCategoryTab(category: category)).toList(),
           ),
         ),
       ),
