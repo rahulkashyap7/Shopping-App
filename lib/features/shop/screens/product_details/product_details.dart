@@ -10,14 +10,12 @@ import 'package:shopping_app/features/shop/screens/product_details/widgets/produ
 import 'package:shopping_app/features/shop/screens/product_details/widgets/rating_share_widget.dart';
 import 'package:shopping_app/features/shop/screens/product_reviews/product_reviews.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
-import 'package:shopping_app/utils/helpers/helper_function.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final dark = RHelperFunctions.isDarkMode(context);
     return Scaffold(
       bottomNavigationBar: RBottomAddToCart(),
       body: SingleChildScrollView(

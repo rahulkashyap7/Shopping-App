@@ -57,11 +57,7 @@ class HomeScreen extends StatelessWidget {
             // Body
             Padding(
               padding: const EdgeInsets.all(RSizes.defaultSpace),
-              child: RPromoSlider(banners: [
-                RImages.promoBanner1,
-                RImages.promoBanner2,
-                RImages.promoBanner3
-              ]),
+              child: RPromoSlider(),
             ),
             const SizedBox(height: RSizes.spaceBtwItems),
 

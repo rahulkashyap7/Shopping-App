@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:shopping_app/features/personalization/controls/user_controller.dart';
-
 import '../../../../../common/widgets/appbar/appbar.dart';
 import '../../../../../common/widgets/product_cart/cart_menu_icon.dart';
 import '../../../../../utils/constants/colors.dart';

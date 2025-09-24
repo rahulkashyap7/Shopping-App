@@ -1,8 +1,21 @@
-
+import '../../../features/shop/models/banner_model.dart';
 import '../../../features/shop/models/category_model.dart';
 import '../../../utils/constants/image_strings.dart';
 
 class RDummyData{
+  // Banner
+  static final List<BannerModel> banners = [
+    BannerModel(imageUrl: RImages.promoBanner1, targetScreen: RRoutes.order, active: false),
+    BannerModel(imageUrl: RImages.promoBanner2, targetScreen: RRoutes.cart, active: true),
+    BannerModel(imageUrl: RImages.promoBanner3, targetScreen: RRoutes.favorites, active: true),
+    BannerModel(imageUrl: RImages.promoBanner1, targetScreen: RRoutes.search, active: true),
+    BannerModel(imageUrl: RImages.promoBanner2, targetScreen: RRoutes.settings, active: true),
+    BannerModel(imageUrl: RImages.promoBanner3, targetScreen: RRoutes.userAddress, active: true),
+    BannerModel(imageUrl: RImages.promoBanner1, targetScreen: RRoutes.checkOut, active: true),
+    BannerModel(imageUrl: RImages.promoBanner2, targetScreen: RRoutes.order, active: false),
+  ];
+
+
   // -- List of all Categories
   static final List<CategoryModel> categories = [
     CategoryModel(id: '1', image: RImages.sportIcon, name: 'Sports', isFeatured: true),

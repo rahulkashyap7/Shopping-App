@@ -4,7 +4,6 @@ import 'package:shopping_app/features/shop/controls/category_controller.dart';
 import 'package:shopping_app/features/shop/screens/sub_categories/sub_categories.dart';
 import '../../../../../common/widgets/image_text_widgets/vertical_image_text.dart';
 import '../../../../../common/widgets/shimmers/category_shimmer.dart';
-import '../../../../../utils/constants/image_strings.dart';
 
 class RHomeCategories extends StatelessWidget {
   const RHomeCategories({

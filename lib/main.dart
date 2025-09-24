@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
@@ -20,11 +21,17 @@ Future<void> main() async {
   // Await Splash until other items Load
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  // Todo: initialize Firebase and initialize Authentication
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
-      .then(
-    (FirebaseApp value) => Get.put(AuthenticationRepository()),
+  // Initialize Firebase
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // Initialize Firebase App Check (for development, use debug provider)
+  await FirebaseAppCheck.instance.activate(
+    androidProvider: AndroidProvider.debug,
+    appleProvider: AppleProvider.debug,
   );
+
+  // Initialize Authentication Repository
+  Get.put(AuthenticationRepository());
 
   // Load all the material design / Theme / localization / binding
   runApp(const App());

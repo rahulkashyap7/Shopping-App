@@ -59,10 +59,45 @@ class AuthenticationRepository extends GetxController {
   Future<UserCredential> loginWithEmailAndPassword(
       String email, String password) async {
     try {
+      // Validate inputs
+      if (email.isEmpty || password.isEmpty) {
+        throw 'Email and password cannot be empty';
+      }
+
+      // Trim email to avoid whitespace issues
+      final trimmedEmail = email.trim();
+
       return await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
+          email: trimmedEmail, password: password);
     } on FirebaseAuthException catch (e) {
-      throw RFirebaseAuthException(e.code).message;
+      // Provide user-friendly error messages
+      String errorMessage;
+      switch (e.code) {
+        case 'user-not-found':
+          errorMessage =
+              'No account found with this email address. Please check your email or create a new account.';
+          break;
+        case 'wrong-password':
+          errorMessage = 'Incorrect password. Please try again.';
+          break;
+        case 'invalid-email':
+          errorMessage = 'Invalid email address format.';
+          break;
+        case 'user-disabled':
+          errorMessage =
+              'This account has been disabled. Please contact support.';
+          break;
+        case 'too-many-requests':
+          errorMessage = 'Too many failed attempts. Please try again later.';
+          break;
+        case 'invalid-credential':
+          errorMessage =
+              'Invalid email or password. Please check your credentials.';
+          break;
+        default:
+          errorMessage = RFirebaseAuthException(e.code).message;
+      }
+      throw errorMessage;
     } on FirebaseException catch (e) {
       throw RFirebaseException(e.code).message;
     } on FormatException catch (_) {
@@ -129,10 +164,12 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// [ReAuthenticate] - RE AUTHENTICATE USER
-  Future<void> reAuthenticateWithEmailAndPassword(String email, String password) async {
+  Future<void> reAuthenticateWithEmailAndPassword(
+      String email, String password) async {
     try {
       // Create a credential
-      AuthCredential credential = EmailAuthProvider.credential(email: email, password: password);
+      AuthCredential credential =
+          EmailAuthProvider.credential(email: email, password: password);
 
       // ReAuthenticate
       await _auth.currentUser!.reauthenticateWithCredential(credential);
@@ -148,9 +185,6 @@ class AuthenticationRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
-
-
-
 
 /*------------ Federated identity & social sign-in ---------------*/
 
@@ -223,5 +257,4 @@ class AuthenticationRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
-
 }
