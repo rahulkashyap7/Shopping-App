@@ -10,6 +10,7 @@ import '../../../../common/widgets/custom_shapes/container/primary_header_contai
 import '../../../../common/widgets/custom_shapes/container/search_container.dart';
 import '../../../../common/widgets/products/product_cards/product_card_vertical.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
+import '../../controls/product_controller.dart';
 import '../all_products/all_products.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -63,16 +64,19 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: RSizes.spaceBtwItems),
 
             // Heading
-            RSectionHeading(title: 'Popular Products', onPressed: () => Get.to(() => AllProducts())),
+            RSectionHeading(
+                title: 'Popular Products',
+                onPressed: () => Get.to(() => AllProducts())),
             const SizedBox(height: RSizes.spaceBtwItems),
 
             // Popular Products
-            RGridLayout(itemCount: 4, itemBuilder: (_, index) => RProductCardVertical()),
+            Obx(() {
+              if (controller.isLoading.value) return const ; //Todo: Shimmer 26:00 Time stamp
+              return RGridLayout(itemCount: 4, itemBuilder: (_, index) => RProductCardVertical());
+            })
           ],
         ),
       ),
     );
   }
 }
-
-

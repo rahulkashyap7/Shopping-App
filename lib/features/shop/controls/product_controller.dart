@@ -1,12 +1,13 @@
 import 'package:get/get.dart';
 import 'package:shopping_app/common/widgets/loaders/loaders.dart';
+import '../../../data/repositories/products/product_repository.dart';
 import '../models/product_model.dart';
 
 class ProductController extends GetxController {
   static ProductController get instance => Get.find();
 
   final isLoading = false.obs;
-  fianl productRepository = Get.put(ProductRepository());
+  final productRepository = Get.put(ProductRepository());
   RxList<ProductModel> featuredProducts = <ProductModel>[].obs;
 
   @override

@@ -1,7 +1,8 @@
-
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shopping_app/features/shop/models/product_attribute_model.dart';
 import 'package:shopping_app/features/shop/models/product_variation_model.dart';
+
+import 'brand_model.dart';
 
 class ProductModel {
   String id;
@@ -66,6 +67,7 @@ class ProductModel {
 
   /// Map Json Oriented document snapshot from Firebase to model
   factory ProductModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
+    if (document.data() == null) return ProductModel.empty();
     final data = document.data()!;
     return ProductModel(
       id: document.id,
@@ -83,7 +85,6 @@ class ProductModel {
       images: data['Images'] != null ? List<String>.from(data['Images']) : [],
       productAttributes: (data['ProductAttributes'] as List<dynamic>).map((e) => ProductAttributeModel.fromJson(e)).toList(),
       productVariations: (data['ProductVariations'] as List<dynamic>).map((e) => ProductVariationModel.fromJson(e)).toList(),
-    ); // ProductModel
+    );
   }
-
 }
