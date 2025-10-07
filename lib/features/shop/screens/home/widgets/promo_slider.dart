@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopping_app/features/shop/controls/banner_controller.dart';
-import 'package:shopping_app/features/shop/controls/home_controller.dart';
 import 'package:shopping_app/utils/popups/shimmer.dart';
 import '../../../../../common/widgets/custom_shapes/container/circular_container.dart';
 import '../../../../../common/widgets/images/R_rounded_image.dart';

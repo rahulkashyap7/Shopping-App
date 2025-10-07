@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:shopping_app/common/widgets/appbar/appbar.dart';
 import 'package:shopping_app/common/widgets/icons/r_circular_icon.dart';
 import 'package:shopping_app/common/widgets/layouts/grid_layout.dart';
+import 'package:shopping_app/features/shop/models/product_model.dart';
 import 'package:shopping_app/features/shop/screens/home/home.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 
@@ -25,7 +26,7 @@ class FevouriteScreen extends StatelessWidget {
         child: Padding(padding: EdgeInsets.all(RSizes.defaultSpace),
           child: Column(
             children: [
-              RGridLayout(itemCount: 5, itemBuilder: (_, index) => RProductCardVertical()),
+              RGridLayout(itemCount: 5, itemBuilder: (_, index) => RProductCardVertical(product: ProductModel.empty())),
             ],
           ),
         ),

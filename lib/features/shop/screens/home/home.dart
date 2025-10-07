@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopping_app/common/widgets/layouts/grid_layout.dart';
+import 'package:shopping_app/common/widgets/shimmers/vertical_product_shimmer.dart';
 import 'package:shopping_app/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:shopping_app/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:shopping_app/features/shop/screens/home/widgets/promo_slider.dart';
@@ -71,8 +72,18 @@ class HomeScreen extends StatelessWidget {
 
             // Popular Products
             Obx(() {
-              if (controller.isLoading.value) return const ; //Todo: Shimmer 26:00 Time stamp
-              return RGridLayout(itemCount: 4, itemBuilder: (_, index) => RProductCardVertical());
+              if (controller.isLoading.value)
+                return const RVerticalProductShimmer();
+
+              if (controller.featuredProducts.isEmpty) {
+                return Center(
+                    child: Text('No Data Found!',
+                        style: Theme.of(context).textTheme.bodyMedium));
+              }
+              return RGridLayout(
+                  itemCount: controller.featuredProducts.length,
+                  itemBuilder: (_, index) => RProductCardVertical(product: controller.featuredProducts[index]),
+              );
             })
           ],
         ),

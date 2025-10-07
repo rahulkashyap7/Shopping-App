@@ -17,7 +17,11 @@ class ProductRepository extends GetxController {
   Future<List<ProductModel>> getFeaturedProducts() async {
     try {
       // ToDo: Time Stamp 22:39
-      final snapshot = await _db.collection('Products').where('isFeatured', isEqualTo: true).limit(4).get();
+      final snapshot = await _db
+          .collection('Products')
+          .where('isFeatured', isEqualTo: true)
+          .limit(4)
+          .get();
       return snapshot.docs.map((e) => ProductModel.fromSnapshot(e)).toList();
     } on FirebaseException catch (e) {
       throw RFirebaseException(e.code).message;
@@ -28,7 +32,6 @@ class ProductRepository extends GetxController {
     }
   }
 
-
   /// Upload dummy data to the Cloud Firebase
   Future<void> uploadDummyData(List<ProductModel> products) async {
     try {
@@ -38,11 +41,10 @@ class ProductRepository extends GetxController {
       // Loop through each product
       for (var product in products) {
         // Get image data link from local assets
-        final thumbnail =
-            await storage.getImageDataFromAssets(product.thumbnail);
+        final thumbnail = await storage.getImageFromAssets(product.thumbnail);
 
         // Upload image and get its URL
-        final url = await storage.uploadImageData(
+        final url = await storage.uploadingImageData(
             'Products/Images', thumbnail, product.thumbnail.toString());
 
         // Assign URL to product.thumbnail attribute
@@ -53,10 +55,10 @@ class ProductRepository extends GetxController {
           List<String> imagesUrl = [];
           for (var image in product.images!) {
             // Get image data link from local assets
-            final assetImage = await storage.getImageDataFromAssets(image);
+            final assetImage = await storage.getImageFromAssets(image);
 
             // Upload image and get its URL
-            final url = await storage.uploadImageData(
+            final url = await storage.uploadingImageData(
                 'Products/Images', assetImage, image);
 
             // Assign URL to product.thumbnail attribute
@@ -71,10 +73,10 @@ class ProductRepository extends GetxController {
           for (var variation in product.productVariations!) {
             // Get image data link from local assets
             final assetImage =
-                await storage.getImageDataFromAssets(variation.image);
+                await storage.getImageFromAssets(variation.image);
 
             // Upload image and get its URL
-            final url = await storage.uploadImageData(
+            final url = await storage.uploadingImageData(
                 'Products/Images', assetImage, variation.image);
 
             // Assign URL to variation.image attribute

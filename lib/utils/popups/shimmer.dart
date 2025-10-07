@@ -14,6 +14,7 @@ class RShimmerEffect extends StatelessWidget {
     this.radius = 15,
     this.color
 }) : super(key: key);
+
   final double width, height, radius;
   final Color? color;
 

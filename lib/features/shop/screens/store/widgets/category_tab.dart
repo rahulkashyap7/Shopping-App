@@ -3,6 +3,7 @@ import 'package:shopping_app/common/widgets/layouts/grid_layout.dart';
 import 'package:shopping_app/common/widgets/products/product_cards/product_card_vertical.dart';
 import 'package:shopping_app/common/widgets/texts/section_heading.dart';
 import 'package:shopping_app/features/shop/models/category_model.dart';
+import 'package:shopping_app/features/shop/models/product_model.dart';
 import '../../../../../common/widgets/brand_cards/brand_showcase.dart';
 import '../../../../../utils/constants/image_strings.dart';
 import '../../../../../utils/constants/sizes.dart';
@@ -34,7 +35,7 @@ class RCategoryTab extends StatelessWidget {
             RSectionHeading(title: 'You might like', onPressed: () {}),
             const SizedBox(height: RSizes.spaceBtwItems),
 
-            RGridLayout(itemCount: 4, itemBuilder: (_, index) => RProductCardVertical()),
+            RGridLayout(itemCount: 4, itemBuilder: (_, index) => RProductCardVertical(product: ProductModel.empty())),
             const SizedBox(height: RSizes.spaceBtwSections),
           ],
         ),

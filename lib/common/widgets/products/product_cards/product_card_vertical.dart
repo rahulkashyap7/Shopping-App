@@ -4,9 +4,10 @@ import 'package:iconsax/iconsax.dart';
 import 'package:shopping_app/common/widgets/images/R_rounded_image.dart';
 import 'package:shopping_app/common/widgets/texts/product_price_text.dart';
 import 'package:shopping_app/common/widgets/texts/product_title_text.dart';
+import 'package:shopping_app/features/shop/controls/product_controller.dart';
+import 'package:shopping_app/features/shop/models/product_model.dart';
 import 'package:shopping_app/features/shop/screens/product_details/product_details.dart';
 import 'package:shopping_app/utils/constants/colors.dart';
-import 'package:shopping_app/utils/constants/image_strings.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 import 'package:shopping_app/utils/helpers/helper_function.dart';
 import '../../../styles/shadow.dart';
@@ -15,14 +16,19 @@ import '../../icons/r_circular_icon.dart';
 import '../../texts/brand_title_with_verfied_icon.dart';
 
 class RProductCardVertical extends StatelessWidget {
-  const RProductCardVertical({super.key});
+  const RProductCardVertical({super.key, required this.product});
+
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
+    final controller = ProductController.instance;
+    final salePercentage =
+        controller.calculateSalePercentage(product.price, product.salePrice);
     final dark = RHelperFunctions.isDarkMode(context);
 
     return GestureDetector(
-      onTap: () => Get.to(() => ProductDetailScreen()),
+      onTap: () => Get.to(() => ProductDetailScreen(product: product)),
       child: Container(
         width: 180,
         padding: EdgeInsets.all(1),
@@ -36,13 +42,19 @@ class RProductCardVertical extends StatelessWidget {
             // Thumbnail
             RRoundedContainer(
               height: 180,
+              width: 180,
               padding: EdgeInsets.all(RSizes.sm),
               backgroundColor: dark ? RColors.dark : RColors.light,
               child: Stack(
                 children: [
                   // Thumbnail Image
-                  RRoundedImage(
-                      imageUrl: RImages.productImage1, applyImageRadius: true),
+                  Center(
+                    child: RRoundedImage(
+                      imageUrl: product.thumbnail,
+                      applyImageRadius: true,
+                      isNetworkImage: true,
+                    ),
+                  ),
 
                   // Sale Tag
                   Positioned(
@@ -52,7 +64,7 @@ class RProductCardVertical extends StatelessWidget {
                       backgroundColor: RColors.secondary.withOpacity(0.8),
                       padding: const EdgeInsets.symmetric(
                           horizontal: RSizes.sm, vertical: RSizes.xs),
-                      child: Text('25%',
+                      child: Text('$salePercentage%',
                           style: Theme.of(context)
                               .textTheme
                               .labelLarge!
@@ -79,10 +91,9 @@ class RProductCardVertical extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  RProductTitleText(
-                      title: 'Nike Air Jordan Sneakers', smallSize: true),
-                  const SizedBox(height: RSizes.spaceBtwItems / 2),
-                  RBrandTitleWithVerifiedIcon(title: 'Nike'),
+                  RProductTitleText(title: product.title, smallSize: true),
+                  SizedBox(height: RSizes.spaceBtwItems / 2),
+                  RBrandTitleWithVerifiedIcon(title: product.brand!.name),
                 ],
               ),
             ),
@@ -93,10 +104,32 @@ class RProductCardVertical extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Product Price
-                Padding(
-                  padding: const EdgeInsets.only(left: RSizes.sm),
-                  child: const RProductPriceText(price: '35.0'),
+                // Price
+                Flexible(
+                  child: Column(
+                    children: [
+                      if (product.productType ==
+                              ProductType.single.toString() &&
+                          product.salePrice > 0)
+                        Padding(
+                          padding: const EdgeInsets.only(left: RSizes.sm),
+                          child: Text(
+                            product.price.toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .apply(decoration: TextDecoration.lineThrough),
+                          ),
+                        ),
+
+                      // Price, show sale price as main price if sale exist.
+                      Padding(
+                        padding: const EdgeInsets.only(left: RSizes.sm),
+                        child: RProductPriceText(
+                            price: controller.getProductPrice(product)),
+                      ),
+                    ],
+                  ),
                 ),
 
                 Container(
@@ -104,16 +137,14 @@ class RProductCardVertical extends StatelessWidget {
                     color: RColors.dark,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(RSizes.cardRadiusMd),
-                      bottomRight:
-                      Radius.circular(RSizes.productImageRadius),
+                      bottomRight: Radius.circular(RSizes.productImageRadius),
                     ),
                   ),
                   child: SizedBox(
                       width: RSizes.iconLg * 1.2,
                       height: RSizes.iconLg * 1.2,
                       child: Center(
-                          child:
-                          Icon(Iconsax.add, color: RColors.white))),
+                          child: Icon(Iconsax.add, color: RColors.white))),
                 )
               ],
             )
@@ -123,4 +154,3 @@ class RProductCardVertical extends StatelessWidget {
     );
   }
 }
-
