@@ -6,7 +6,6 @@ import 'package:shopping_app/common/widgets/texts/product_title_text.dart';
 import 'package:shopping_app/features/shop/controls/product/product_controller.dart';
 import 'package:shopping_app/features/shop/models/product_model.dart';
 import 'package:shopping_app/utils/constants/enums.dart';
-import 'package:shopping_app/utils/constants/image_strings.dart';
 
 import '../../../../../common/widgets/custom_shapes/container/rounded_container.dart';
 import '../../../../../utils/constants/colors.dart';

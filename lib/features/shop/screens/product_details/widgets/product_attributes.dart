@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:shopping_app/common/widgets/custom_shapes/container/rounded_container.dart';
 import 'package:shopping_app/common/widgets/texts/product_price_text.dart';
 import 'package:shopping_app/common/widgets/texts/product_title_text.dart';
 import 'package:shopping_app/common/widgets/texts/section_heading.dart';
+import 'package:shopping_app/features/shop/controls/product/variation_controller.dart';
 import 'package:shopping_app/features/shop/models/product_model.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 import 'package:shopping_app/utils/helpers/helper_function.dart';
@@ -17,11 +20,13 @@ class RProductAttributes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(VariationController());
     final dark = RHelperFunctions.isDarkMode(context);
-
     return Column(
       children: [
-        // Selected Attribute Pricing & Description
+        /// Selected Attribute Pricing & Description
+        // Display variation price and stock when some variation is selected
+        if (controller.selectedVariation.value.id.isNotEmpty)
         RRoundedContainer(
           padding: EdgeInsets.all(RSizes.md),
           backgroundColor: dark ? RColors.darkerGrey : RColors.grey,

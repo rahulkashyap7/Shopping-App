@@ -5,7 +5,6 @@ import 'package:shopping_app/common/widgets/shimmers/vertical_product_shimmer.da
 import 'package:shopping_app/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:shopping_app/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:shopping_app/features/shop/screens/home/widgets/promo_slider.dart';
-import 'package:shopping_app/utils/constants/image_strings.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 import '../../../../common/widgets/custom_shapes/container/primary_header_container.dart';
 import '../../../../common/widgets/custom_shapes/container/search_container.dart';
