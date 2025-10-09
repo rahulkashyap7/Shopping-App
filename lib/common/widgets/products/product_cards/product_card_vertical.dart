@@ -4,7 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:shopping_app/common/widgets/images/R_rounded_image.dart';
 import 'package:shopping_app/common/widgets/texts/product_price_text.dart';
 import 'package:shopping_app/common/widgets/texts/product_title_text.dart';
-import 'package:shopping_app/features/shop/controls/product_controller.dart';
+import 'package:shopping_app/features/shop/controls/product/product_controller.dart';
 import 'package:shopping_app/features/shop/models/product_model.dart';
 import 'package:shopping_app/features/shop/screens/product_details/product_details.dart';
 import 'package:shopping_app/utils/constants/colors.dart';

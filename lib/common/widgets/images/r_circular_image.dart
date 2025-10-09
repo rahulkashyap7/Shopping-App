@@ -5,7 +5,6 @@ import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_function.dart';
 
-
 class RCircularImage extends StatelessWidget {
   const RCircularImage({
     super.key,
@@ -33,25 +32,29 @@ class RCircularImage extends StatelessWidget {
       height: height,
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
-        color: backgroundColor ?? (RHelperFunctions.isDarkMode(context) ? RColors.black : RColors.white),
+        color: backgroundColor ??
+            (RHelperFunctions.isDarkMode(context)
+                ? RColors.black
+                : RColors.white),
         borderRadius: BorderRadius.circular(100),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(100),
         child: Center(
-          child: isNetworkImage ? CachedNetworkImage(
-            fit: fit,
-            color: overlayColor,
-            imageUrl: image,
-            progressIndicatorBuilder: (context, url, downloadProgress) => RShimmerEffect(width: 55, height: 55, radius: 55),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-          )
-        
-          : Image(
-            fit: fit,
-            image: AssetImage(image),
-            color: overlayColor,
-          ),
+          child: isNetworkImage
+              ? CachedNetworkImage(
+                  fit: fit,
+                  color: overlayColor,
+                  imageUrl: image,
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      RShimmerEffect(width: 55, height: 55, radius: 55),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                )
+              : Image(
+                  fit: fit,
+                  image: AssetImage(image),
+                  color: overlayColor,
+                ),
         ),
       ),
     );

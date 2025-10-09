@@ -6,7 +6,6 @@ import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_function.dart';
 import '../custom_shapes/container/rounded_container.dart';
 
-
 class RBrandShowCase extends StatelessWidget {
   const RBrandShowCase({
     super.key,
@@ -31,20 +30,25 @@ class RBrandShowCase extends StatelessWidget {
 
           // Brand Top 3 Product Images
           Row(
-              children: images.map((image) => brandTopProductImageWidget(image, context)).toList()),
+              children: images
+                  .map((image) => brandTopProductImageWidget(image, context))
+                  .toList()),
         ],
       ),
     );
   }
 
   Widget brandTopProductImageWidget(String image, context) {
-    return Expanded(child: RRoundedContainer(
-      height: 100,
-      padding: EdgeInsets.all(RSizes.md),
-      margin: EdgeInsets.only(right: RSizes.sm),
-      backgroundColor: RHelperFunctions.isDarkMode(context) ? RColors.darkerGrey : RColors.light,
-      child: Image(fit: BoxFit.contain, image: AssetImage(image)),
-    ),
+    return Expanded(
+      child: RRoundedContainer(
+        height: 100,
+        padding: EdgeInsets.all(RSizes.md),
+        margin: EdgeInsets.only(right: RSizes.sm),
+        backgroundColor: RHelperFunctions.isDarkMode(context)
+            ? RColors.darkerGrey
+            : RColors.light,
+        child: Image(fit: BoxFit.contain, image: AssetImage(image)),
+      ),
     );
   }
 }

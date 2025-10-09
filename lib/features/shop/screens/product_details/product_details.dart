@@ -25,7 +25,7 @@ class ProductDetailScreen extends StatelessWidget {
         child: Column(
           children: [
             // product Image Slider
-            RProductImageSlider(),
+            RProductImageSlider(product: product),
 
             // Product Details
             Padding(
@@ -36,11 +36,11 @@ class ProductDetailScreen extends StatelessWidget {
                   RRatingAndShare(),
 
                   /// Price, Title & Brand
-                  RProductMetaData(),
+                  RProductMetaData(product: product),
 
                   /// Attributes
-                  RProductAttributes(),
-                  SizedBox(height: RSizes.spaceBtwSections),
+                 if (product.productType == ProductType.variable.toString()) RProductAttributes(product: product),
+                  if (product.productType == ProductType.variable.toString()) SizedBox(height: RSizes.spaceBtwSections),
                   
                   /// CheckOut Button
                   SizedBox(width: double.infinity, child: ElevatedButton(onPressed: (){}, child: Text('Checkout'))),
@@ -49,7 +49,7 @@ class ProductDetailScreen extends StatelessWidget {
                   /// Description
                   RSectionHeading(title: 'Description', showActionButton: false),
                   ReadMoreText(
-                    'This is a product description for low-top sneaker with a green and white color scheme. The shoe has a white leather base with green overlays, a green Nike Swoosh, green laces, and a matching green outsole.',
+                    product.description ?? '',
                     trimLines: 2,
                     trimMode: TrimMode.Line,
                     trimCollapsedText: ' Show more',

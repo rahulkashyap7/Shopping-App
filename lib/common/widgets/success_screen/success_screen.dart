@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shopping_app/common/styles/spacing_styles.dart';
 import 'package:shopping_app/utils/constants/text_strings.dart';
-import 'package:shopping_app/utils/helpers/helper_function.dart';
 import '../../../utils/constants/sizes.dart';
 
 class SuccessScreen extends StatelessWidget {
