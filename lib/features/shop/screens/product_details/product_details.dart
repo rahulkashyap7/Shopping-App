@@ -19,6 +19,16 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Debug: Print product details
+    print('DEBUG: ProductDetailScreen - Product: ${product.title}');
+    print('DEBUG: ProductDetailScreen - ProductType: ${product.productType}');
+    print(
+        'DEBUG: ProductDetailScreen - IsVariable: ${product.productType == ProductType.variable.toString()}');
+    print(
+        'DEBUG: ProductDetailScreen - Attributes: ${product.productAttributes?.length ?? 0}');
+    print(
+        'DEBUG: ProductDetailScreen - Variations: ${product.productVariations?.length ?? 0}');
+
     return Scaffold(
       bottomNavigationBar: RBottomAddToCart(),
       body: SingleChildScrollView(
@@ -29,7 +39,10 @@ class ProductDetailScreen extends StatelessWidget {
 
             // Product Details
             Padding(
-                padding: EdgeInsets.only(right: RSizes.defaultSpace, left: RSizes.defaultSpace, bottom: RSizes.defaultSpace),
+              padding: EdgeInsets.only(
+                  right: RSizes.defaultSpace,
+                  left: RSizes.defaultSpace,
+                  bottom: RSizes.defaultSpace),
               child: Column(
                 children: [
                   /// Ratings
@@ -39,23 +52,33 @@ class ProductDetailScreen extends StatelessWidget {
                   RProductMetaData(product: product),
 
                   /// Attributes
-                 if (product.productType == ProductType.variable.toString()) RProductAttributes(product: product),
-                  if (product.productType == ProductType.variable.toString()) SizedBox(height: RSizes.spaceBtwSections),
-                  
+                  if (product.productAttributes != null &&
+                      product.productAttributes!.isNotEmpty)
+                    RProductAttributes(product: product),
+                  if (product.productAttributes != null &&
+                      product.productAttributes!.isNotEmpty)
+                    SizedBox(height: RSizes.spaceBtwSections),
+
                   /// CheckOut Button
-                  SizedBox(width: double.infinity, child: ElevatedButton(onPressed: (){}, child: Text('Checkout'))),
+                  SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                          onPressed: () {}, child: Text('Checkout'))),
                   SizedBox(height: RSizes.spaceBtwSections),
 
                   /// Description
-                  RSectionHeading(title: 'Description', showActionButton: false),
+                  RSectionHeading(
+                      title: 'Description', showActionButton: false),
                   ReadMoreText(
                     product.description ?? '',
                     trimLines: 2,
                     trimMode: TrimMode.Line,
                     trimCollapsedText: ' Show more',
                     trimExpandedText: ' Less',
-                    moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
-                    lessStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                    moreStyle:
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                    lessStyle:
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
                   ),
 
                   /// Reviews
@@ -64,8 +87,12 @@ class ProductDetailScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      RSectionHeading(title: 'Reviews(199)', showActionButton: false),
-                      IconButton(icon: Icon(Iconsax.arrow_right_3, size: 18), onPressed: () => Get.to(() => ProductReviewsScreen())),
+                      RSectionHeading(
+                          title: 'Reviews(199)', showActionButton: false),
+                      IconButton(
+                          icon: Icon(Iconsax.arrow_right_3, size: 18),
+                          onPressed: () =>
+                              Get.to(() => ProductReviewsScreen())),
                     ],
                   ),
                   SizedBox(height: RSizes.spaceBtwSections),
@@ -78,5 +105,3 @@ class ProductDetailScreen extends StatelessWidget {
     );
   }
 }
-
-

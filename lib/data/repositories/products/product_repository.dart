@@ -19,7 +19,7 @@ class ProductRepository extends GetxController {
       // ToDo: Time Stamp 22:39
       final snapshot = await _db
           .collection('Products')
-          .where('isFeatured', isEqualTo: true)
+          .where('IsFeatured', isEqualTo: true)
           .limit(4)
           .get();
       return snapshot.docs.map((e) => ProductModel.fromSnapshot(e)).toList();

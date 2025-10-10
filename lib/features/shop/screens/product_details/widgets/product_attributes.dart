@@ -22,90 +22,122 @@ class RProductAttributes extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(VariationController());
     final dark = RHelperFunctions.isDarkMode(context);
-    return Column(
-      children: [
-        /// Selected Attribute Pricing & Description
-        // Display variation price and stock when some variation is selected
-        if (controller.selectedVariation.value.id.isNotEmpty)
-        RRoundedContainer(
-          padding: EdgeInsets.all(RSizes.md),
-          backgroundColor: dark ? RColors.darkerGrey : RColors.grey,
-          child: Column(
-            children: [
-              // Title, Price and Stock Status
-              Row(
+
+    return Obx(
+      () => Column(
+        children: [
+          /// Selected Attribute Pricing & Description
+          // Display variation price and stock when some variation is selected
+          if (controller.selectedVariation.value.id.isNotEmpty)
+            RRoundedContainer(
+              padding: EdgeInsets.all(RSizes.md),
+              backgroundColor: dark ? RColors.darkerGrey : RColors.grey,
+              child: Column(
                 children: [
-                  RSectionHeading(title: 'Variation', showActionButton: false),
-                  SizedBox(width: RSizes.spaceBtwItems),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  // Title, Price and Stock Status
+                  Row(
                     children: [
-                      Row(
+                      RSectionHeading(
+                          title: 'Variation', showActionButton: false),
+                      SizedBox(width: RSizes.spaceBtwItems),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const RProductTitleText(
-                              title: 'Price', smallSize: true),
-                          const SizedBox(width: RSizes.spaceBtwItems),
+                          Row(
+                            children: [
+                              const RProductTitleText(
+                                  title: 'Price', smallSize: true),
+                              const SizedBox(width: RSizes.spaceBtwItems),
 
-                          // Actual Price
-                          Text('\$25',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .apply(
-                                      decoration: TextDecoration.lineThrough)),
-                          const SizedBox(width: RSizes.spaceBtwItems),
+                              // Actual Price
+                              if (controller.selectedVariation.value.salePrice >
+                                  0)
+                                Text(
+                                    '\$${controller.selectedVariation.value.price}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .apply(
+                                            decoration:
+                                                TextDecoration.lineThrough)),
+                              const SizedBox(width: RSizes.spaceBtwItems),
 
-                          // Sale Price
-                          const RProductPriceText(price: '20'),
+                              // Sale Price
+                              RProductPriceText(
+                                  price: controller.getVariationPrice()),
+                            ],
+                          ),
+
+                          // Stock
+                          Row(
+                            children: [
+                              const RProductTitleText(
+                                  title: 'Stock', smallSize: true),
+                              const SizedBox(width: RSizes.spaceBtwItems),
+                              Text(controller.variationStockStatus.value,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium),
+                            ],
+                          )
                         ],
                       ),
-
-                      // Stock
-                      Row(
-                        children: [
-                          const RProductTitleText(
-                              title: 'Stock', smallSize: true),
-                          const SizedBox(width: RSizes.spaceBtwItems),
-                          Text('In Stock',
-                              style: Theme.of(context).textTheme.titleMedium),
-                        ],
-                      )
                     ],
+                  ),
+
+                  // Variation Description
+                  RProductTitleText(
+                    title: controller.selectedVariation.value.description ?? '',
+                    smallSize: true,
+                    maxLines: 4,
                   ),
                 ],
               ),
+            ),
+          const SizedBox(height: RSizes.spaceBtwItems),
 
-              // Variation Description
-              RProductTitleText(
-                title:
-                    'This is the Description of the product and it can go upto max 4 lines.',
-                smallSize: true,
-                maxLines: 4,
-              ),
-            ],
+          // Attributes
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: product.productAttributes!
+                .map((attribute) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RSectionHeading(
+                            title: attribute.name ?? '',
+                            showActionButton: false),
+                        SizedBox(height: RSizes.spaceBtwItems / 2),
+                        Wrap(
+                            spacing: 8,
+                            children: attribute.values!.map((attributeValue) {
+                              final isSelected = controller
+                                      .selectedAttributes[attribute.name] ==
+                                  attributeValue;
+                              final available = controller
+                                  .getAttributeAvailabilityInVariation(
+                                      product.productVariations!,
+                                      attribute.name!)
+                                  .contains(attributeValue);
+
+                              return RChoiceChip(
+                                  text: attributeValue,
+                                  selected: isSelected,
+                                  onSelected: available
+                                      ? (selected) {
+                                          if (selected && available) {
+                                            controller.onAttributeSelected(
+                                                product,
+                                                attribute.name ?? '',
+                                                attributeValue);
+                                          }
+                                        }
+                                      : null);
+                            }).toList())
+                      ],
+                    ))
+                .toList(),
           ),
-        ),
-        const SizedBox(height: RSizes.spaceBtwItems),
-
-        // Attributes
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: product.productAttributes!
-              .map((attribute) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      RSectionHeading(
-                          title: attribute.name ?? '', showActionButton: false),
-                      SizedBox(height: RSizes.spaceBtwItems / 2),
-                      Wrap(
-                          spacing: 8,
-                          children: attribute.values!.map((value) =>
-                              RChoiceChip(text: value, selected: true, onSelected: (value) {})).toList())
-                    ],
-                  ))
-              .toList(),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

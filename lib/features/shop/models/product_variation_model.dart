@@ -38,17 +38,21 @@ class ProductVariationModel {
   }
 
   /// Map json orientated document snapshot from firebase to Model
-  factory ProductVariationModel.fromJson(Map<String, dynamic> document) {
-    final data = document;
-    if (data.isEmpty) return ProductVariationModel.empty();
+  factory ProductVariationModel.fromJson(Map<String, dynamic>? document) {
+    if (document == null || document.isEmpty)
+      return ProductVariationModel.empty();
     return ProductVariationModel(
-      id: data['Id'] ?? '',
-      price: double.parse((data['Price'] ?? 0.0).toString()),
-      sku: data['SKU'] ?? '',
-      stock: data['Stock'] ?? '',
-      salePrice: double.parse((data['SalePrice'] ?? 0.0).toString()),
-      image: data['Image'] ?? '',
-      attributeValues: Map<String, String>.from(data['AttributeValues']),
+      id: document['Id']?.toString() ?? '',
+      price: double.parse((document['Price'] ?? 0.0).toString()),
+      sku: document['SKU']?.toString() ?? '',
+      stock: document['Stock'] is int
+          ? document['Stock']
+          : int.tryParse(document['Stock']?.toString() ?? '0') ?? 0,
+      salePrice: double.parse((document['SalePrice'] ?? 0.0).toString()),
+      image: document['Image']?.toString() ?? '',
+      attributeValues: document['AttributeValues'] != null
+          ? Map<String, String>.from(document['AttributeValues'])
+          : {},
     );
   }
 }
