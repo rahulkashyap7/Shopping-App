@@ -19,7 +19,7 @@ class BrandProducts extends StatelessWidget {
             RBrandCard(showBorder: true),
             SizedBox(height: RSizes.spaceBtwSections),
 
-            RSortableProducts(),
+            RSortableProducts(products: [],),
           ],
         ),
         ),

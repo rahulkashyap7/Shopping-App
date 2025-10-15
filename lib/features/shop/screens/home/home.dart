@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopping_app/common/widgets/layouts/grid_layout.dart';
@@ -66,7 +67,11 @@ class HomeScreen extends StatelessWidget {
             // Heading
             RSectionHeading(
                 title: 'Popular Products',
-                onPressed: () => Get.to(() => AllProducts())),
+                onPressed: () => Get.to(() => AllProducts(
+                      title: 'Popular Products',
+                      futureMethod: controller.fetchAllFeaturedProducts(),
+                    )),
+            ),
             const SizedBox(height: RSizes.spaceBtwItems),
 
             // Popular Products
@@ -80,8 +85,9 @@ class HomeScreen extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyMedium));
               }
               return RGridLayout(
-                  itemCount: controller.featuredProducts.length,
-                  itemBuilder: (_, index) => RProductCardVertical(product: controller.featuredProducts[index]),
+                itemCount: controller.featuredProducts.length,
+                itemBuilder: (_, index) => RProductCardVertical(
+                    product: controller.featuredProducts[index]),
               );
             })
           ],

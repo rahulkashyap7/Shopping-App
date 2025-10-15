@@ -26,26 +26,24 @@ class ProductController extends GetxController {
       // Debug: Print the number of products fetched
       print('DEBUG: Fetched ${products.length} products');
 
-      // Debug: Print product details
-      for (var product in products) {
-        print('DEBUG: Product: ${product.title}');
-        print('DEBUG: ProductType: ${product.productType}');
-        print('DEBUG: Attributes: ${product.productAttributes?.length ?? 0}');
-        print('DEBUG: Variations: ${product.productVariations?.length ?? 0}');
-        if (product.productAttributes != null) {
-          for (var attr in product.productAttributes!) {
-            print('DEBUG: Attribute - ${attr.name}: ${attr.values}');
-          }
-        }
-      }
-
       // Assign Products
       featuredProducts.assignAll(products);
     } catch (e) {
-      print('DEBUG: Error fetching products: $e');
       RLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  Future<List<ProductModel>> fetchAllFeaturedProducts() async {
+    try {
+      // Fetch Products
+      final products = await productRepository.getFeaturedProducts();
+      return products;
+
+    } catch (e) {
+      RLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
+      return [];
     }
   }
 
@@ -80,7 +78,7 @@ class ProductController extends GetxController {
         return largestPrice.toString();
       } else {
         // Otherwise, return a price range
-        return '\$${smallestPrice.toStringAsFixed(1)} - \$${largestPrice.toStringAsFixed(1)}';
+        return '${smallestPrice.toStringAsFixed(1)} - ${largestPrice.toStringAsFixed(1)}';
       }
     }
   }
