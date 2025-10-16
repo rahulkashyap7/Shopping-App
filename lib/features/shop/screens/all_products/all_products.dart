@@ -31,14 +31,13 @@ class AllProducts extends StatelessWidget {
             builder: (context, snapshot) {
               // Check the state of the FutureBuilder snapshot
               const loader = RVerticalProductShimmer();
-             final widget = RCloudHelperFunction.checkMultiRecordState(snapshot: snapshot, loader: loader);
+              final widget = RCloudHelperFunction.checkMultiRecordState(snapshot: snapshot, loader: loader);
 
              // Return appropriate widget based on snapshot state
               if (widget != null) return widget;
 
               // Products found!
               final products = snapshot.data!;
-
 
               return RSortableProducts(products: products);
             }

@@ -7,6 +7,7 @@ import 'package:shopping_app/common/widgets/layouts/grid_layout.dart';
 import 'package:shopping_app/common/widgets/product_cart/cart_menu_icon.dart';
 import 'package:shopping_app/common/widgets/texts/section_heading.dart';
 import 'package:shopping_app/features/shop/controls/category_controller.dart';
+import 'package:shopping_app/features/shop/controls/product/brand_controller.dart';
 import 'package:shopping_app/features/shop/screens/store/widgets/category_tab.dart';
 import 'package:shopping_app/utils/constants/colors.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
@@ -19,6 +20,7 @@ class StoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brandController = Get.put(BrandController());
     final categories = CategoryController.instance.featuredCategories;
     return DefaultTabController(
       length: categories.length,
@@ -63,12 +65,17 @@ class StoreScreen extends StatelessWidget {
                               onPressed: () => Get.to(() => const AllBrandsScreen())),
                           const SizedBox(height: RSizes.spaceBtwItems / 1.5),
 
-                          RGridLayout(
-                              itemCount: 4,
-                              mainAxisExtent: 80,
-                              itemBuilder: (_, index) {
-                                return const RBrandCard(showBorder: true);
-                              }),
+                          Obx(
+                            (){
+                              return RGridLayout(
+                                  itemCount: 4,
+                                  mainAxisExtent: 80,
+                                  itemBuilder: (_, index) {
+                                    // In the backend
+                                    return const RBrandCard(showBorder: true);
+                                  });
+                            }
+                          ),
                         ],
                       ),
                     ),
