@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/common/widgets/brand_cards/r_brand_card.dart';
+import 'package:shopping_app/features/shop/models/brand_model.dart';
 
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/sizes.dart';
@@ -25,7 +26,7 @@ class RBrandShowCase extends StatelessWidget {
       child: Column(
         children: [
           // Brand with Product Count
-          const RBrandCard(showBorder: false),
+          RBrandCard(showBorder: false, brand: BrandModel.empty(),),
           const SizedBox(height: RSizes.spaceBtwItems),
 
           // Brand Top 3 Product Images

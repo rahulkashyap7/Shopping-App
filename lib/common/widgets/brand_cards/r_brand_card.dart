@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../features/shop/models/brand_model.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/enums.dart';
 import '../../../utils/constants/image_strings.dart';
@@ -11,9 +12,10 @@ import '../texts/brand_title_with_verfied_icon.dart';
 
 class RBrandCard extends StatelessWidget {
   const RBrandCard({
-    super.key, required this.showBorder, this.onTap,
+    super.key, required this.showBorder, this.onTap, required this.brand,
   });
 
+  final BrandModel brand;
   final bool showBorder;
   final void Function()? onTap;
   
@@ -32,8 +34,8 @@ class RBrandCard extends StatelessWidget {
             // ICons
             Flexible(
               child: RCircularImage(
-                isNetworkImage: false,
-                image: RImages.nike,
+                isNetworkImage: true,
+                image: brand.image,
                 backgroundColor: Colors.transparent,
                 overlayColor:
                 RHelperFunctions.isDarkMode(context) ? RColors.white : RColors.black,
@@ -49,10 +51,10 @@ class RBrandCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   RBrandTitleWithVerifiedIcon(
-                      title: 'Nike',
+                      title: brand.name,
                       brandTextSize: TextSizes.large),
                   Text(
-                    '256 Products',
+                    '${brand.productsCount ?? 0} products',
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.labelMedium,
                   )

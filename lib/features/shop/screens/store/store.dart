@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:shopping_app/common/widgets/appbar/appbar.dart';
 import 'package:shopping_app/common/widgets/appbar/tabbar.dart';
 import 'package:shopping_app/common/widgets/custom_shapes/container/search_container.dart';
@@ -13,6 +14,7 @@ import 'package:shopping_app/utils/constants/colors.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 import 'package:shopping_app/utils/helpers/helper_function.dart';
 import '../../../../common/widgets/brand_cards/r_brand_card.dart';
+import '../../../../common/widgets/shimmers/brand_shimmer.dart';
 import '../brands/all_brands.dart';
 
 class StoreScreen extends StatelessWidget {
@@ -22,6 +24,7 @@ class StoreScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final brandController = Get.put(BrandController());
     final categories = CategoryController.instance.featuredCategories;
+
     return DefaultTabController(
       length: categories.length,
       child: Scaffold(
@@ -65,14 +68,23 @@ class StoreScreen extends StatelessWidget {
                               onPressed: () => Get.to(() => const AllBrandsScreen())),
                           const SizedBox(height: RSizes.spaceBtwItems / 1.5),
 
+                          ///--Brands Grid
                           Obx(
                             (){
+                              if (brandController.isLoading.value) return RBrandShimmer();
+
+                              if (brandController.featuredBrands.isEmpty) {
+                                return Center(
+                                  child: Text('No Data Found!', style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white)),
+                                );
+                              }
+
                               return RGridLayout(
-                                  itemCount: 4,
+                                  itemCount: brandController.featuredBrands.length,
                                   mainAxisExtent: 80,
                                   itemBuilder: (_, index) {
-                                    // In the backend
-                                    return const RBrandCard(showBorder: true);
+                                    final brand = brandController.featuredBrands[index];
+                                    return RBrandCard(showBorder: true, brand: brand);
                                   });
                             }
                           ),

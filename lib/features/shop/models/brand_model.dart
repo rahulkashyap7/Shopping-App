@@ -7,7 +7,12 @@ class BrandModel {
   bool? isFeatured;
   int? productsCount;
 
-  BrandModel({required this.id, required this.image, required this.name, this.isFeatured, this.productsCount});
+  BrandModel(
+      {required this.id,
+      required this.image,
+      required this.name,
+      this.isFeatured,
+      this.productsCount});
 
   /// Empty Helper Function
   static BrandModel empty() => BrandModel(id: '', image: '', name: '');
@@ -37,7 +42,8 @@ class BrandModel {
   }
 
   /// Map Json oriented document snapshot from Firebase to UserModel
-  factory BrandModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
+  factory BrandModel.fromSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> document) {
     if (document.data() != null) {
       final data = document.data()!;
 
@@ -53,4 +59,4 @@ class BrandModel {
       return BrandModel.empty();
     }
   }
-
+}

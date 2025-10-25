@@ -40,7 +40,6 @@ class ProductController extends GetxController {
       // Fetch Products
       final products = await productRepository.getFeaturedProducts();
       return products;
-
     } catch (e) {
       RLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
       return [];
