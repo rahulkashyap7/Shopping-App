@@ -66,7 +66,7 @@ class ProductRepository extends GetxController {
   }
 
 
-  Future<List<ProductModel>> getProductsForBrand({required String brandId, int limit = -1}) async {
+  Future<List<ProductModel>> getProductsForBrands({required String brandId, int limit = -1}) async {
     try {
 
       final querySnapshot = limit == -1 ? await _db.collection('Products').where('Brand.Id', isEqualTo: brandId).get() :

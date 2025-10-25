@@ -41,6 +41,7 @@ class BrandController extends GetxController {
   /// -- get Brands for Category
 
 
+
   /// -- Get Brand specific products from your data source.
   Future<List<ProductModel>> getBrandProducts(String brandId) async {
     try {
