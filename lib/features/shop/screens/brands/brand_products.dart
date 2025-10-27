@@ -34,7 +34,9 @@ class BrandProducts extends StatelessWidget {
                 final widget = RCloudHelperFunction.checkMultiRecordState(snapshot: snapshot, loader: loader);
                 if (widget != null) return widget;
 
-                return RSortableProducts(products: [],);
+                /// Record Found!
+                final brandProducts = snapshot.data!;
+                return RSortableProducts(products: brandProducts);
               }
             ),
           ],

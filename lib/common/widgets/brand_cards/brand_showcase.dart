@@ -11,9 +11,11 @@ class RBrandShowCase extends StatelessWidget {
   const RBrandShowCase({
     super.key,
     required this.images,
+    this.brand,
   });
 
   final List<String> images;
+  final BrandModel? brand;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,10 @@ class RBrandShowCase extends StatelessWidget {
       child: Column(
         children: [
           // Brand with Product Count
-          RBrandCard(showBorder: false, brand: BrandModel.empty(),),
+          RBrandCard(
+            showBorder: false,
+            brand: brand ?? BrandModel.empty(),
+          ),
           const SizedBox(height: RSizes.spaceBtwItems),
 
           // Brand Top 3 Product Images

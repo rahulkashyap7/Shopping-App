@@ -33,7 +33,7 @@ class BrandModel {
     final data = document;
     if (data.isEmpty) return BrandModel.empty();
     return BrandModel(
-      id: data['Id'] ?? '',
+      id: (data['Id'] ?? '').toString(),
       name: data['Name'] ?? '',
       image: data['Image'] ?? '',
       isFeatured: data['IsFeatured'] ?? false,
@@ -52,7 +52,7 @@ class BrandModel {
         id: document.id,
         name: data['Name'] ?? '',
         image: data['Image'] ?? '',
-        productsCount: data['ProductsCount'] ?? '',
+        productsCount: int.parse((data['ProductsCount'] ?? 0).toString()),
         isFeatured: data['IsFeatured'] ?? false,
       );
     } else {

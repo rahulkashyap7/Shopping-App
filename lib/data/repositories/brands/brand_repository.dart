@@ -16,22 +16,37 @@ class BrandRepository extends GetxController {
   /// Get all categories
   Future<List<BrandModel>> getAllBrands() async {
     try {
-
       final snapshot = await _db.collection('Brands').get();
-      final result = snapshot.docs.map((e) => BrandModel.fromSnapshot(e)).toList();
-      return result;
 
-    }  on FirebaseException catch (e) {
+      print('DEBUG: Found ${snapshot.docs.length} brands');
+
+      // Debug: Print first document's data structure
+      if (snapshot.docs.isNotEmpty) {
+        print('DEBUG: First brand data: ${snapshot.docs.first.data()}');
+      }
+
+      final result =
+          snapshot.docs.map((e) => BrandModel.fromSnapshot(e)).toList();
+
+      print('DEBUG: Successfully parsed ${result.length} brands');
+
+      return result;
+    } on FirebaseException catch (e) {
+      print(
+          'DEBUG: FirebaseException in getAllBrands: ${e.code} - ${e.message}');
       throw RFirebaseException(e.code).message;
     } on FormatException catch (_) {
+      print('DEBUG: FormatException in getAllBrands');
       throw const RFormatException();
     } on PlatformException catch (e) {
+      print(
+          'DEBUG: PlatformException in getAllBrands: ${e.code} - ${e.message}');
       throw RPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. While fetching banners.';
+      print('DEBUG: General Exception in getAllBrands: $e');
+      throw 'Something went wrong. While fetching brands: $e';
     }
   }
 
   /// Get Brands for category
-
 }

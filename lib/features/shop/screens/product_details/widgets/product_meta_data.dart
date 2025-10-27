@@ -20,30 +20,42 @@ class RProductMetaData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = ProductController.instance;
-    final salePercentage = controller.calculateSalePercentage(product.price, product.salePrice);
+    final salePercentage =
+        controller.calculateSalePercentage(product.price, product.salePrice);
     final darkMode = RHelperFunctions.isDarkMode(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         /// Price & Sale Price
-        Row(
-          children: [
-            // Sale Tag
-            RRoundedContainer(
-              radius: RSizes.sm,
-              backgroundColor: RColors.secondary.withOpacity(0.8),
-              padding: EdgeInsets.symmetric(horizontal: RSizes.sm, vertical: RSizes.xs),
-              child: Text('$salePercentage%', style: Theme.of(context).textTheme.labelLarge!.apply(color: RColors.black)),
-            ),
-            const SizedBox(width: RSizes.spaceBtwItems),
+        Row(children: [
+          // Sale Tag
+          RRoundedContainer(
+            radius: RSizes.sm,
+            backgroundColor: RColors.secondary.withOpacity(0.8),
+            padding: EdgeInsets.symmetric(
+                horizontal: RSizes.sm, vertical: RSizes.xs),
+            child: Text('$salePercentage%',
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .apply(color: RColors.black)),
+          ),
+          const SizedBox(width: RSizes.spaceBtwItems),
 
-            // Price
-            if(product.productType == ProductType.single.toString() &&product.salePrice > 0)
-            Text('\$${product.price}', style: Theme.of(context).textTheme.titleSmall!.apply(decoration: TextDecoration.lineThrough)),
-            if(product.productType == ProductType.single.toString() &&product.salePrice > 0) const SizedBox(width: RSizes.spaceBtwItems),
-            RProductPriceText(price: controller.getProductPrice(product), isLarge: true),
-          ]
-        ),
+          // Price
+          if (product.productType == ProductType.single.toString() &&
+              product.salePrice > 0)
+            Text('\$${product.price}',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall!
+                    .apply(decoration: TextDecoration.lineThrough)),
+          if (product.productType == ProductType.single.toString() &&
+              product.salePrice > 0)
+            const SizedBox(width: RSizes.spaceBtwItems),
+          RProductPriceText(
+              price: controller.getProductPrice(product), isLarge: true),
+        ]),
         const SizedBox(height: RSizes.spaceBtwItems / 1.5),
 
         /// title
@@ -55,7 +67,8 @@ class RProductMetaData extends StatelessWidget {
           children: [
             RProductTitleText(title: 'Status'),
             const SizedBox(width: RSizes.spaceBtwItems),
-            Text(controller.getProductStockStatus(product.stock), style: Theme.of(context).textTheme.titleMedium),
+            Text(controller.getProductStockStatus(product.stock),
+                style: Theme.of(context).textTheme.titleMedium),
           ],
         ),
         const SizedBox(height: RSizes.spaceBtwItems / 1.5),
@@ -63,15 +76,18 @@ class RProductMetaData extends StatelessWidget {
         /// Brand
         Row(
           children: [
-            RCircularImage(image: product.brand != null ? product.brand!.image : '',
+            RCircularImage(
+                image: product.brand != null ? product.brand!.image : '',
                 width: 32,
                 height: 32,
+                isNetworkImage: true,
                 overlayColor: darkMode ? RColors.white : RColors.black),
             const SizedBox(width: RSizes.spaceBtwItems),
-            RBrandTitleWithVerifiedIcon(title: product.brand != null ? product.brand!.name : '', brandTextSize: TextSizes.medium),
+            RBrandTitleWithVerifiedIcon(
+                title: product.brand != null ? product.brand!.name : '',
+                brandTextSize: TextSizes.medium),
           ],
         ),
-
       ],
     );
   }

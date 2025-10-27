@@ -19,17 +19,31 @@ class BannerRepository extends GetxController {
           .collection('Banners')
           .where('Active', isEqualTo: true)
           .get();
+
+      print('DEBUG: Found ${result.docs.length} active banners');
+
+      // Debug: Print first document's data structure
+      if (result.docs.isNotEmpty) {
+        print('DEBUG: First banner data: ${result.docs.first.data()}');
+      }
+
       return result.docs
           .map((documentSnapshot) => BannerModel.fromSnapshot(documentSnapshot))
           .toList();
     } on FirebaseException catch (e) {
+      print(
+          'DEBUG: FirebaseException in fetchBanners: ${e.code} - ${e.message}');
       throw RFirebaseException(e.code).message;
     } on FormatException catch (_) {
+      print('DEBUG: FormatException in fetchBanners');
       throw const RFormatException();
     } on PlatformException catch (e) {
+      print(
+          'DEBUG: PlatformException in fetchBanners: ${e.code} - ${e.message}');
       throw RPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. While fetching banners.';
+      print('DEBUG: General Exception in fetchBanners: $e');
+      throw 'Something went wrong. While fetching banners: $e';
     }
   }
 

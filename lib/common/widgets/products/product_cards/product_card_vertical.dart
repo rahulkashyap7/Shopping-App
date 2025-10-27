@@ -27,6 +27,13 @@ class RProductCardVertical extends StatelessWidget {
         controller.calculateSalePercentage(product.price, product.salePrice);
     final dark = RHelperFunctions.isDarkMode(context);
 
+    // Debug: Check if brand is null
+    if (product.brand == null) {
+      print('DEBUG: Product "${product.title}" has NULL brand!');
+    } else {
+      print('DEBUG: Product "${product.title}" brand: ${product.brand!.name}');
+    }
+
     return GestureDetector(
       onTap: () => Get.to(() => ProductDetailScreen(product: product)),
       child: Container(
@@ -41,8 +48,8 @@ class RProductCardVertical extends StatelessWidget {
           children: [
             // Thumbnail
             RRoundedContainer(
-              height: 180,
-              width: 180,
+              height: 195,
+              width: 195,
               padding: EdgeInsets.all(RSizes.sm),
               backgroundColor: dark ? RColors.dark : RColors.light,
               child: Stack(
@@ -57,20 +64,21 @@ class RProductCardVertical extends StatelessWidget {
                   ),
 
                   // Sale Tag
-                  Positioned(
-                    top: 12,
-                    child: RRoundedContainer(
-                      radius: RSizes.sm,
-                      backgroundColor: RColors.secondary.withOpacity(0.8),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: RSizes.sm, vertical: RSizes.xs),
-                      child: Text('$salePercentage%',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge!
-                              .apply(color: RColors.black)),
+                  if (salePercentage != null)
+                    Positioned(
+                      top: 12,
+                      child: RRoundedContainer(
+                        radius: RSizes.sm,
+                        backgroundColor: RColors.secondary.withOpacity(0.8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: RSizes.sm, vertical: RSizes.xs),
+                        child: Text('$salePercentage%',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .apply(color: RColors.black)),
+                      ),
                     ),
-                  ),
 
                   // Favourite Icon
                   Positioned(
@@ -93,7 +101,11 @@ class RProductCardVertical extends StatelessWidget {
                 children: [
                   RProductTitleText(title: product.title, smallSize: true),
                   SizedBox(height: RSizes.spaceBtwItems / 2),
-                  RBrandTitleWithVerifiedIcon(title: product.brand!.name),
+                  if (product.brand != null)
+                    RBrandTitleWithVerifiedIcon(
+                      title: product.brand!.name,
+                      textAlign: TextAlign.left,
+                    ),
                 ],
               ),
             ),
@@ -107,6 +119,7 @@ class RProductCardVertical extends StatelessWidget {
                 // Price
                 Flexible(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (product.productType ==
                               ProductType.single.toString() &&

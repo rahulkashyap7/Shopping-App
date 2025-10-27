@@ -21,13 +21,25 @@ class ProductRepository extends GetxController {
           .where('IsFeatured', isEqualTo: true)
           .limit(4)
           .get();
+
+      print(
+          'DEBUG: Found ${snapshot.docs.length} products with IsFeatured=true');
+
+      // Debug: Print first document's data structure
+      if (snapshot.docs.isNotEmpty) {
+        print('DEBUG: First product data: ${snapshot.docs.first.data()}');
+      }
+
       return snapshot.docs.map((e) => ProductModel.fromSnapshot(e)).toList();
     } on FirebaseException catch (e) {
+      print('DEBUG: FirebaseException: ${e.code} - ${e.message}');
       throw RFirebaseException(e.code).message;
     } on PlatformException catch (e) {
+      print('DEBUG: PlatformException: ${e.code} - ${e.message}');
       throw RPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again';
+      print('DEBUG: General Exception: $e');
+      throw 'Something went wrong. Please try again: $e';
     }
   }
 
@@ -65,27 +77,57 @@ class ProductRepository extends GetxController {
     }
   }
 
-
-  Future<List<ProductModel>> getProductsForBrands({required String brandId, int limit = -1}) async {
+  Future<List<ProductModel>> getProductsForBrands(
+      {required String brandId, int limit = -1}) async {
     try {
+      // Try to parse brandId as int, if it fails, use as string
+      // In Firestore, Brand.Id is stored as integer (1, 2, 3)
+      dynamic brandIdQuery = brandId;
+      try {
+        brandIdQuery = int.parse(brandId);
+        print('DEBUG: Querying products with Brand.Id (int) = $brandIdQuery');
+      } catch (e) {
+        print(
+            'DEBUG: Querying products with Brand.Id (string) = $brandIdQuery');
+      }
 
-      final querySnapshot = limit == -1 ? await _db.collection('Products').where('Brand.Id', isEqualTo: brandId).get() :
-          await _db.collection('Products').where('Brand.Id', isEqualTo: brandId).limit(limit).get();
+      final querySnapshot = limit == -1
+          ? await _db
+              .collection('Products')
+              .where('Brand.Id', isEqualTo: brandIdQuery)
+              .get()
+          : await _db
+              .collection('Products')
+              .where('Brand.Id', isEqualTo: brandIdQuery)
+              .limit(limit)
+              .get();
 
-      final products = querySnapshot.docs.map((doc) => ProductModel.fromSnapshot(doc)).toList();
+      print(
+          'DEBUG: Found ${querySnapshot.docs.length} products for brand $brandId');
+
+      if (querySnapshot.docs.isNotEmpty) {
+        print(
+            'DEBUG: First product brand data: ${querySnapshot.docs.first.data()['Brand']}');
+      }
+
+      final products = querySnapshot.docs
+          .map((doc) => ProductModel.fromSnapshot(doc))
+          .toList();
 
       return products;
-    } on FirebaseException catch (e){
+    } on FirebaseException catch (e) {
+      print(
+          'DEBUG: FirebaseException in getProductsForBrands: ${e.code} - ${e.message}');
       throw RFirebaseException(e.code).message;
-    } on PlatformException catch (e){
+    } on PlatformException catch (e) {
+      print(
+          'DEBUG: PlatformException in getProductsForBrands: ${e.code} - ${e.message}');
       throw RPlatformException(e.code).message;
-    } catch (e){
-      throw 'Something went wrong. Please try again';
+    } catch (e) {
+      print('DEBUG: General Exception in getProductsForBrands: $e');
+      throw 'Something went wrong. Please try again: $e';
     }
   }
-
-
-
 
   /// Upload dummy data to the Cloud Firebase
   Future<void> uploadDummyData(List<ProductModel> products) async {

@@ -9,6 +9,7 @@ import 'package:shopping_app/common/widgets/product_cart/cart_menu_icon.dart';
 import 'package:shopping_app/common/widgets/texts/section_heading.dart';
 import 'package:shopping_app/features/shop/controls/category_controller.dart';
 import 'package:shopping_app/features/shop/controls/product/brand_controller.dart';
+import 'package:shopping_app/features/shop/screens/brands/brand_products.dart';
 import 'package:shopping_app/features/shop/screens/store/widgets/category_tab.dart';
 import 'package:shopping_app/utils/constants/colors.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
@@ -84,7 +85,7 @@ class StoreScreen extends StatelessWidget {
                                   mainAxisExtent: 80,
                                   itemBuilder: (_, index) {
                                     final brand = brandController.featuredBrands[index];
-                                    return RBrandCard(showBorder: true, brand: brand);
+                                    return RBrandCard(showBorder: true, brand: brand, onTap: () => Get.to(() => BrandProducts(brand: brand)));
                                   });
                             }
                           ),
