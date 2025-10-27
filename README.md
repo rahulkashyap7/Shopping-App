@@ -1,6 +1,6 @@
 # Shopping App UI
 
-![Project Banner](https://i0.wp.com/codingwitht.com/wp-content/uploads/2024/08/Light-mode-all-screens-image-try-high-res-web-final-scaled-1.webp?resize=1080%2C1476&ssl=1)
+![Project Banner](https://media.licdn.com/dms/image/v2/D5605AQGPVGL57qBoJA/feedshare-thumbnail_720_1280/B56ZmZhP2EG0A0-/0/1759217256302?e=1762174800&v=beta&t=kQJN8a0nF-EN04MqQZ-4gvNBLhpKZWEbMDx7rgcfhB4&quot)
 
 A modern Flutter implementation of e-commerce UI with premium design elements and smooth interactions.
 
