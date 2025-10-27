@@ -27,13 +27,6 @@ class RProductCardVertical extends StatelessWidget {
         controller.calculateSalePercentage(product.price, product.salePrice);
     final dark = RHelperFunctions.isDarkMode(context);
 
-    // Debug: Check if brand is null
-    if (product.brand == null) {
-      print('DEBUG: Product "${product.title}" has NULL brand!');
-    } else {
-      print('DEBUG: Product "${product.title}" brand: ${product.brand!.name}');
-    }
-
     return GestureDetector(
       onTap: () => Get.to(() => ProductDetailScreen(product: product)),
       child: Container(
