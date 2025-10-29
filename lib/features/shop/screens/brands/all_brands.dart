@@ -9,7 +9,6 @@ import 'package:shopping_app/features/shop/screens/brands/brand_products.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 
 import '../../../../common/widgets/shimmers/brand_shimmer.dart';
-import '../../models/brand_model.dart';
 
 class AllBrandsScreen extends StatelessWidget {
   const AllBrandsScreen({super.key});

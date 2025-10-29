@@ -1,7 +1,10 @@
 import 'package:get/get.dart';
 import 'package:shopping_app/common/widgets/loaders/loaders.dart';
 import 'package:shopping_app/data/repositories/categories/category_repository.dart';
+import 'package:shopping_app/data/repositories/products/product_repository.dart';
 import 'package:shopping_app/features/shop/models/category_model.dart';
+
+import '../models/product_model.dart';
 
 class CategoryController extends GetxController {
   static CategoryController get instance => Get.find();
@@ -45,4 +48,9 @@ class CategoryController extends GetxController {
   /// --- Load Selected category data
 
   /// Get Category or sub category products
+  Future<List<ProductModel>> getCategoryProducts({required String categoryId, int limit = 4}) async {
+    // Fetch limited (4) products against each subCategory;
+    final products = await ProductRepository.instance.getProductsForCategory(categoryId: categoryId, limit: limit);
+    return products;
+  }
 }

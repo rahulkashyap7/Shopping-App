@@ -26,7 +26,7 @@ class BrandProducts extends StatelessWidget {
             SizedBox(height: RSizes.spaceBtwSections),
 
             FutureBuilder(
-              future: controller.getBrandProducts(brand.id),
+              future: controller.getBrandProducts(brandId: brand.id),
               builder: (context, snapshot) {
 
                 // Handle Loader, No record, OR error Message

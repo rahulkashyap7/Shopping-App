@@ -18,35 +18,46 @@ class BrandRepository extends GetxController {
     try {
       final snapshot = await _db.collection('Brands').get();
 
-      print('DEBUG: Found ${snapshot.docs.length} brands');
-
-      // Debug: Print first document's data structure
-      if (snapshot.docs.isNotEmpty) {
-        print('DEBUG: First brand data: ${snapshot.docs.first.data()}');
-      }
-
-      final result =
-          snapshot.docs.map((e) => BrandModel.fromSnapshot(e)).toList();
-
-      print('DEBUG: Successfully parsed ${result.length} brands');
-
+      final result = snapshot.docs.map((e) => BrandModel.fromSnapshot(e)).toList();
       return result;
+
     } on FirebaseException catch (e) {
-      print(
-          'DEBUG: FirebaseException in getAllBrands: ${e.code} - ${e.message}');
       throw RFirebaseException(e.code).message;
     } on FormatException catch (_) {
-      print('DEBUG: FormatException in getAllBrands');
       throw const RFormatException();
     } on PlatformException catch (e) {
-      print(
-          'DEBUG: PlatformException in getAllBrands: ${e.code} - ${e.message}');
       throw RPlatformException(e.code).message;
     } catch (e) {
-      print('DEBUG: General Exception in getAllBrands: $e');
       throw 'Something went wrong. While fetching brands: $e';
     }
   }
 
   /// Get Brands for category
+  Future<List<BrandModel>> getBrandsForCategory(String categoryId) async {
+    try {
+      // Query to get all documents where categoryId matches the provided categoryId
+      QuerySnapshot brandCategoryQuery = await _db.collection('BrandCategory').where('categoryId', isEqualTo: categoryId).get();
+
+      // Extract brandIds from the documents
+      List<String> brandIds = brandCategoryQuery.docs.map((doc) => doc['brandId'] as String).toList();
+
+      // Query to get all documents where brandId is in the list of brandIds, FieldPath.documentId to query document in Collection
+      final brandsQuery = await _db.collection('Brands').where(FieldPath.documentId, whereIn: brandIds).limit(2).get();
+
+      // Extract brands names or other relevant data from the documents
+      List<BrandModel> brands = brandsQuery.docs.map((doc) => BrandModel.fromSnapshot(doc)).toList();
+
+      return brands;
+
+
+    } on FirebaseException catch (e) {
+      throw RFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const RFormatException();
+    } on PlatformException catch (e) {
+      throw RPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. While fetching brands: $e';
+    }
+  }
 }
