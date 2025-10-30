@@ -18,9 +18,9 @@ class BrandRepository extends GetxController {
     try {
       final snapshot = await _db.collection('Brands').get();
 
-      final result = snapshot.docs.map((e) => BrandModel.fromSnapshot(e)).toList();
+      final result =
+          snapshot.docs.map((e) => BrandModel.fromSnapshot(e)).toList();
       return result;
-
     } on FirebaseException catch (e) {
       throw RFirebaseException(e.code).message;
     } on FormatException catch (_) {
@@ -36,20 +36,33 @@ class BrandRepository extends GetxController {
   Future<List<BrandModel>> getBrandsForCategory(String categoryId) async {
     try {
       // Query to get all documents where categoryId matches the provided categoryId
-      QuerySnapshot brandCategoryQuery = await _db.collection('BrandCategory').where('categoryId', isEqualTo: categoryId).get();
+      QuerySnapshot brandCategoryQuery = await _db
+          .collection('BrandCategory')
+          .where('categoryId', isEqualTo: categoryId)
+          .get();
 
       // Extract brandIds from the documents
-      List<String> brandIds = brandCategoryQuery.docs.map((doc) => doc['brandId'] as String).toList();
+      List<String> brandIds = brandCategoryQuery.docs
+          .map((doc) => doc['brandId'] as String)
+          .toList();
+
+      // Check if brandIds list is empty to avoid 'in' filter error
+      if (brandIds.isEmpty) {
+        return [];
+      }
 
       // Query to get all documents where brandId is in the list of brandIds, FieldPath.documentId to query document in Collection
-      final brandsQuery = await _db.collection('Brands').where(FieldPath.documentId, whereIn: brandIds).limit(2).get();
+      final brandsQuery = await _db
+          .collection('Brands')
+          .where(FieldPath.documentId, whereIn: brandIds)
+          .limit(2)
+          .get();
 
       // Extract brands names or other relevant data from the documents
-      List<BrandModel> brands = brandsQuery.docs.map((doc) => BrandModel.fromSnapshot(doc)).toList();
+      List<BrandModel> brands =
+          brandsQuery.docs.map((doc) => BrandModel.fromSnapshot(doc)).toList();
 
       return brands;
-
-
     } on FirebaseException catch (e) {
       throw RFirebaseException(e.code).message;
     } on FormatException catch (_) {
