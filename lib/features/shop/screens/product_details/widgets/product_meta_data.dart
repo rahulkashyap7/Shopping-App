@@ -80,7 +80,11 @@ class RProductMetaData extends StatelessWidget {
                 image: product.brand != null ? product.brand!.image : '',
                 width: 32,
                 height: 32,
-                isNetworkImage: true,
+                // If image is a full URL, load from network; otherwise treat as asset
+                isNetworkImage: product.brand != null
+                    ? (product.brand!.image.startsWith('http') ||
+                        product.brand!.image.startsWith('https'))
+                    : false,
                 overlayColor: darkMode ? RColors.white : RColors.black),
             const SizedBox(width: RSizes.spaceBtwItems),
             RBrandTitleWithVerifiedIcon(
