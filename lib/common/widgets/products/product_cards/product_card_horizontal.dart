@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shopping_app/common/widgets/custom_shapes/container/rounded_container.dart';
 import 'package:shopping_app/common/widgets/images/R_rounded_image.dart';
+import 'package:shopping_app/common/widgets/products/favourite_icon/favourite_icon.dart';
 import 'package:shopping_app/common/widgets/texts/brand_title_with_verfied_icon.dart';
 import 'package:shopping_app/common/widgets/texts/product_price_text.dart';
 import 'package:shopping_app/common/widgets/texts/product_title_text.dart';
 import 'package:shopping_app/utils/constants/image_strings.dart';
+import '../../../../features/shop/models/product_model.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/helpers/helper_function.dart';
@@ -58,10 +60,7 @@ class RProductCardHorizontal extends StatelessWidget {
                 Positioned(
                     top: 0,
                     right: 0,
-                    child: RCircularIcon(
-                      icon: Iconsax.heart5,
-                      color: Colors.red,
-                    ))
+                    child: RFavouriteIcon(productId: ''))
               ],
             ),
           ),

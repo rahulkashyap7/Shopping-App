@@ -7,6 +7,7 @@ import 'package:shopping_app/features/shop/controls/category_controller.dart';
 import 'package:shopping_app/features/shop/models/category_model.dart';
 import 'package:shopping_app/features/shop/screens/all_products/all_products.dart';
 import 'package:shopping_app/features/shop/screens/store/widgets/category_brands.dart';
+import 'package:shopping_app/utils/helpers/cloud_helper_function.dart';
 import '../../../../../common/widgets/layouts/grid_layout.dart';
 import '../../../../../common/widgets/products/product_cards/product_card_vertical.dart';
 import '../../../../../utils/constants/sizes.dart';
@@ -33,47 +34,23 @@ class RCategoryTab extends StatelessWidget {
 
                 // Products
                 FutureBuilder(
-                    future:
-                        controller.getCategoryProducts(categoryId: category.id),
-                    builder: (context, snapshot) {
-                      // Show loader while waiting
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const RVerticalProductShimmer();
-                      }
+                    future: controller.getCategoryProducts(categoryId: category.id), builder: (context, snapshot) {
 
-                      // Show error if present
-                      if (snapshot.hasError) {
-                        return const Center(
-                            child: Text('Something went wrong.'));
-                      }
+                      /// Helper Function: Handle Loader, No Record or error message
+                      final response = RCloudHelperFunction.checkMultiRecordState(snapshot: snapshot, loader: RVerticalProductShimmer());
+                      if (response != null) return response;
 
-                      // Get products data
-                      final products = snapshot.data;
+                      /// Record found!
+                      final products = snapshot.data!;
 
-                      // Show "No Data Found!" if no products
-                      if (products == null || products.isEmpty) {
-                        return Center(
-                          child: Text('No Data Found!',
-                              style: Theme.of(context).textTheme.bodyMedium),
-                        );
-                      }
-
-                      // Record found!
                       return Column(
                         children: [
-                          RSectionHeading(
-                              title: 'You might like',
+                          RSectionHeading(title: 'You might like',
                               onPressed: () => Get.to(AllProducts(
                                     title: category.name,
-                                    futureMethod:
-                                        controller.getCategoryProducts(
-                                            categoryId: category.id, limit: -1),
-                                  ))),
+                                    futureMethod: controller.getCategoryProducts(categoryId: category.id, limit: -1)))),
                           const SizedBox(height: RSizes.spaceBtwItems),
-                          RGridLayout(
-                              itemCount: products.length,
-                              itemBuilder: (_, index) => RProductCardVertical(
-                                  product: products[index])),
+                          RGridLayout(itemCount: products.length, itemBuilder: (_, index) => RProductCardVertical(product: products[index])),
                         ],
                       );
                     }),

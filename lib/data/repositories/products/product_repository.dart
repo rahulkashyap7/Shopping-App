@@ -49,7 +49,8 @@ class ProductRepository extends GetxController {
     }
   }
 
-  /// Get Limited Products
+
+  /// Get Products based on the Query
   Future<List<ProductModel>> fetchProductsByQuery(Query query) async {
     try {
       final querySnapshot = await query.get();
@@ -57,6 +58,20 @@ class ProductRepository extends GetxController {
           .map((doc) => ProductModel.fromQuerySnapshot(doc))
           .toList();
       return productList;
+    } on FirebaseException catch (e) {
+      throw RFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw RPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  /// getFavouriteProducts
+  Future<List<ProductModel>> getFavouriteProducts(List<String> productIds) async {
+    try {
+      final snapshot = await _db.collection('Products').where(FieldPath.documentId, whereIn: productIds).get();
+      return snapshot.docs.map((querySnapshot) => ProductModel.fromSnapshot(querySnapshot)).toList();
     } on FirebaseException catch (e) {
       throw RFirebaseException(e.code).message;
     } on PlatformException catch (e) {
@@ -82,16 +97,12 @@ class ProductRepository extends GetxController {
         final asInt = int.tryParse(brandId);
         if (asInt != null) {
           altNumeric = _db.collection('Products').where('Brand.Id', isEqualTo: asInt);
-          final secondSnapshot = limit == -1
-              ? await altNumeric.get()
-              : await altNumeric.limit(limit).get();
+          final secondSnapshot = limit == -1 ? await altNumeric.get() : await altNumeric.limit(limit).get();
           docs = secondSnapshot.docs;
         }
       }
 
-      final products = docs
-          .map((doc) => ProductModel.fromQuerySnapshot(doc))
-          .toList();
+      final products = docs.map((doc) => ProductModel.fromQuerySnapshot(doc)).toList();
 
       return products;
     } on FirebaseException catch (e) {
@@ -108,20 +119,11 @@ class ProductRepository extends GetxController {
     try {
       // Query to get all documents where productId matches the provided categoryId & Fetch limited or unlimited based on limit
       QuerySnapshot productCategoryQuery = limit == -1
-          ? await _db
-              .collection('ProductCategory')
-              .where('categoryId', isEqualTo: categoryId)
-              .get()
-          : await _db
-              .collection('ProductCategory')
-              .where('categoryId', isEqualTo: categoryId)
-              .limit(limit)
-              .get();
+          ? await _db.collection('ProductCategory').where('categoryId', isEqualTo: categoryId).get()
+          : await _db.collection('ProductCategory').where('categoryId', isEqualTo: categoryId).limit(limit).get();
 
       // Extract productIds from the documents
-      List<String> productIds = productCategoryQuery.docs
-          .map((doc) => doc['productId'] as String)
-          .toList();
+      List<String> productIds = productCategoryQuery.docs.map((doc) => doc['productId'] as String).toList();
 
       // Check if productIds list is empty to avoid 'in' filter error
       if (productIds.isEmpty) {
@@ -129,15 +131,10 @@ class ProductRepository extends GetxController {
       }
 
       // Query to get all documents where the brandId is in the list of brandIds, FieldPath.documentId to query documents in Collection
-      final productsQuery = await _db
-          .collection('Products')
-          .where(FieldPath.documentId, whereIn: productIds)
-          .get();
+      final productsQuery = await _db.collection('Products').where(FieldPath.documentId, whereIn: productIds).get();
 
       // Extract brand names or other relevant data from the documents
-      List<ProductModel> products = productsQuery.docs
-          .map((doc) => ProductModel.fromSnapshot(doc))
-          .toList();
+      List<ProductModel> products = productsQuery.docs.map((doc) => ProductModel.fromSnapshot(doc)).toList();
 
       return products;
     } on FirebaseException catch (e) {

@@ -75,8 +75,7 @@ class HomeScreen extends StatelessWidget {
 
             // Popular Products
             Obx(() {
-              if (controller.isLoading.value)
-                return const RVerticalProductShimmer();
+              if (controller.isLoading.value) return const RVerticalProductShimmer();
 
               if (controller.featuredProducts.isEmpty) {
                 return Center(

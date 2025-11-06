@@ -9,6 +9,7 @@ import 'package:shopping_app/features/authentication/screens/login/login.dart';
 import 'package:shopping_app/features/authentication/screens/onboarding/onboarding.dart';
 import 'package:shopping_app/features/authentication/screens/signup/verify_email.dart';
 import 'package:shopping_app/navigation_menu.dart';
+import 'package:shopping_app/utils/local_storage/storage_utility.dart';
 import '../../../utils/exceptions/firebase_auth_exceptions.dart';
 import '../../../utils/exceptions/firebase_exceptions.dart';
 import '../../../utils/exceptions/format_exceptions.dart';
@@ -25,7 +26,7 @@ class AuthenticationRepository extends GetxController {
   // Get Authenticated User Data
   User? get authUser => _auth.currentUser;
 
-// Called from main.dart on app launch
+  // Called from main.dart on app launch
   @override
   void onReady() {
     FlutterNativeSplash.remove();
@@ -35,8 +36,14 @@ class AuthenticationRepository extends GetxController {
   // Function to show relevant screen
   screenRedirect() async {
     final user = _auth.currentUser;
+
     if (user != null) {
       if (user.emailVerified) {
+
+        // Initialise user specific storage
+        await RLocalStorage.init(user.uid);
+
+        // If the user's email is not verified,  navigate to the main Navigation menu
         Get.offAll(() => NavigationMenu());
       } else {
         Get.offAll(() => VerifyEmailScreen(email: _auth.currentUser?.email));

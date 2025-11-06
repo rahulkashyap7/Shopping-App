@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shopping_app/common/widgets/images/R_rounded_image.dart';
+import 'package:shopping_app/common/widgets/products/favourite_icon/favourite_icon.dart';
 import 'package:shopping_app/common/widgets/texts/product_price_text.dart';
 import 'package:shopping_app/common/widgets/texts/product_title_text.dart';
 import 'package:shopping_app/features/shop/controls/product/product_controller.dart';
@@ -75,12 +76,8 @@ class RProductCardVertical extends StatelessWidget {
 
                   // Favourite Icon
                   Positioned(
-                      top: 0,
-                      right: 0,
-                      child: RCircularIcon(
-                        icon: Iconsax.heart5,
-                        color: Colors.red,
-                      ))
+                      top: 0, right: 0,
+                      child: RFavouriteIcon(productId: product.id))
                 ],
               ),
             ),

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:shopping_app/common/widgets/products/favourite_icon/favourite_icon.dart';
 import 'package:shopping_app/features/shop/controls/product/images_controller.dart';
 import 'package:shopping_app/features/shop/models/product_model.dart';
 import '../../../../../common/widgets/appbar/appbar.dart';
@@ -85,7 +86,7 @@ class RProductImageSlider extends StatelessWidget {
             RAppBar(
               showBackArrow: true,
               actions: [
-                RCircularIcon(icon: Iconsax.heart5, color: Colors.red),
+                RFavouriteIcon(productId: product.id),
               ],
             )
           ],
