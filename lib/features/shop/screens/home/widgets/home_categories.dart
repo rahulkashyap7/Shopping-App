@@ -36,7 +36,7 @@ class RHomeCategories extends StatelessWidget {
             return RVerticalImageText(
                 image: category.image,
                 title: category.name,
-                onTap: () => Get.to(() => SubCategoriesScreen()));
+                onTap: () => Get.to(() => SubCategoriesScreen(category: category)));
           },
         ),
       );

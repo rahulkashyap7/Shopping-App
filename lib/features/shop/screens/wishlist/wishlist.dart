@@ -7,7 +7,6 @@ import 'package:shopping_app/common/widgets/layouts/grid_layout.dart';
 import 'package:shopping_app/common/widgets/loaders/animation_loader.dart';
 import 'package:shopping_app/common/widgets/shimmers/vertical_product_shimmer.dart';
 import 'package:shopping_app/features/shop/controls/product/favourites_controller.dart';
-import 'package:shopping_app/features/shop/models/product_model.dart';
 import 'package:shopping_app/features/shop/screens/home/home.dart';
 import 'package:shopping_app/navigation_menu.dart';
 import 'package:shopping_app/utils/constants/image_strings.dart';

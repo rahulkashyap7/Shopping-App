@@ -31,6 +31,19 @@ class CategoryRepository extends GetxController {
   }
 
   /// Get Sub Categories
+  Future<List<CategoryModel>> getSubCategories(String categoryId) async {
+    try {
+      final snapshot = await _db.collection("Categories").where('ParentId', isEqualTo: categoryId).get();
+      final result = snapshot.docs.map((e) => CategoryModel.fromSnapshot(e)).toList();
+      return result;
+    } on FirebaseException catch (e) {
+      throw RFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw RPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 
   /// Upload Categories to the cloud Firebase
 
@@ -45,13 +58,17 @@ class CategoryRepository extends GetxController {
         final file = await storage.getImageDataFromAssets(category.image);
 
         // Upload Image and Get its URL
-        final url = await storage.uploadImageData('categories', file, category.name);
+        final url =
+            await storage.uploadImageData('categories', file, category.name);
 
         // Assign URL to Category.image attribute
         category.image = url;
 
         // Store Category in Firestore
-        await _db.collection("Categories").doc(category.id).set(category.toJson());
+        await _db
+            .collection("Categories")
+            .doc(category.id)
+            .set(category.toJson());
       }
     } on FirebaseException catch (e) {
       throw RFirebaseException(e.code).message;
