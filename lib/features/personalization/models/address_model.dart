@@ -24,11 +24,19 @@ class AddressModel {
     required this.country,
     this.dateTime,
     this.selectAddress = true,
-});
+  });
 
   String get formattedPhoneNo => RFormatter.formatPhoneNumber(phoneNumber);
 
-  static AddressModel empty() => AddressModel(id: '', name: '', phoneNumber: '', street: '', city: '', state: '', postalCode: '', country: '');
+  static AddressModel empty() => AddressModel(
+      id: '',
+      name: '',
+      phoneNumber: '',
+      street: '',
+      city: '',
+      state: '',
+      postalCode: '',
+      country: '');
 
   Map<String, dynamic> toJson() {
     return {
@@ -41,7 +49,7 @@ class AddressModel {
       'PostalCode': postalCode,
       'Country': country,
       'DateTime': DateTime.now(),
-      'SelectAddress': selectAddress,
+      'SelectedAddress': selectAddress,
     };
   }
 
@@ -55,7 +63,7 @@ class AddressModel {
       state: data['State'] as String,
       postalCode: data['PostalCode'] as String,
       country: data['Country'] as String,
-      selectAddress: data['SelectAddress'] as bool,
+      selectAddress: data['SelectedAddress'] as bool? ?? false,
       dateTime: (data['DateTime'] as Timestamp).toDate(),
     );
   }
@@ -74,7 +82,7 @@ class AddressModel {
       postalCode: data['PostalCode'] ?? '',
       country: data['Country'] ?? '',
       dateTime: (data['DateTime'] as Timestamp).toDate(),
-      selectAddress: data['SelectedAddress'] as bool,
+      selectAddress: data['SelectedAddress'] as bool? ?? false,
     );
   }
 
