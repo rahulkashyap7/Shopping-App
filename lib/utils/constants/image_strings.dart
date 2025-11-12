@@ -11,9 +11,9 @@ class RImages {
   static const String google = 'assets/logos/google.png';
 
   //-- On Boarding Images
-  static const String onBoardingImage1 = 'assets/images/on_boarding_images/onBoarding1.png';
-  static const String onBoardingImage2 = 'assets/images/on_boarding_images/onBoarding2.png';
-  static const String onBoardingImage3 = 'assets/images/on_boarding_images/onBoarding3.png';
+  static const String onBoardingImage1 = 'assets/images/animations/onboarding1.json';
+  static const String onBoardingImage2 = 'assets/images/animations/onboarding2.json';
+  static const String onBoardingImage3 = 'assets/images/animations/shopping-cart.json';
 
   // Verify Screen
   static const String verifyEmail = 'assets/images/on_boarding_images/verifyEmail.png';

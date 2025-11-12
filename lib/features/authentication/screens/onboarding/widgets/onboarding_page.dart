@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/helpers/helper_function.dart';
@@ -15,14 +16,27 @@ class OnBoardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLottieAsset = image.toLowerCase().endsWith('.json');
+    final assetWidth = RHelperFunctions.screenWidth() * 0.8;
+    final assetHeight = RHelperFunctions.screenHeight() * 0.6;
+
     return Padding(
       padding: const EdgeInsets.all(RSizes.defaultSpace),
       child: Column(
         children: [
-          Image(
-              width: RHelperFunctions.screenWidth() * 0.8,
-              height: RHelperFunctions.screenHeight() * 0.6,
-              image: AssetImage(image)),
+          if (isLottieAsset)
+            Lottie.asset(
+              image,
+              width: assetWidth,
+              height: assetHeight,
+              fit: BoxFit.contain,
+            )
+          else
+            Image.asset(
+              image,
+              width: assetWidth,
+              height: assetHeight,
+            ),
           Text(title,
               style: Theme.of(context).textTheme.headlineMedium,
               textAlign: TextAlign.center),
