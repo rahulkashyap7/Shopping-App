@@ -135,6 +135,7 @@ class RProductCardVertical extends StatelessWidget {
                   ),
                 ),
 
+                /// Add to Cart Button
                 Container(
                   decoration: BoxDecoration(
                     color: RColors.dark,

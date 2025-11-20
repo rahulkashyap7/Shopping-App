@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:shopping_app/features/shop/controls/product/cart_controller.dart';
 import 'package:shopping_app/features/shop/screens/cart/cart.dart';
 import '../../../utils/constants/colors.dart';
 
@@ -8,13 +9,17 @@ import '../../../utils/constants/colors.dart';
 class RCartCounterIcon extends StatelessWidget {
   const RCartCounterIcon({
     super.key,
-    required this.onPressed, this.iconColor
+    this.iconColor,
+    this.counterBgColor,
+    this.counterTextColor,
   });
-  final VoidCallback onPressed;
-  final Color? iconColor;
+  final Color? iconColor, counterBgColor, counterTextColor;
 
   @override
   Widget build(BuildContext context) {
+
+    //Get an instance of the CartController
+    final controller = Get.put(CartController());
     return Stack(
       children: [
         IconButton(onPressed: () => Get.to(() => const CartScreen()), icon: Icon(Iconsax.shopping_bag, color: iconColor)),
