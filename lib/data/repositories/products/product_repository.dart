@@ -49,7 +49,6 @@ class ProductRepository extends GetxController {
     }
   }
 
-
   /// Get Products based on the Query
   Future<List<ProductModel>> fetchProductsByQuery(Query query) async {
     try {
@@ -68,16 +67,45 @@ class ProductRepository extends GetxController {
   }
 
   /// getFavouriteProducts
-  Future<List<ProductModel>> getFavouriteProducts(List<String> productIds) async {
+  Future<List<ProductModel>> getFavouriteProducts(
+      List<String> productIds) async {
     try {
-      final snapshot = await _db.collection('Products').where(FieldPath.documentId, whereIn: productIds).get();
-      return snapshot.docs.map((querySnapshot) => ProductModel.fromSnapshot(querySnapshot)).toList();
+      // Check if productIds list is empty to avoid 'whereIn' filter error
+      if (productIds.isEmpty) {
+        return [];
+      }
+
+      // Firestore has a limit of 30 items for whereIn queries
+      // If we have more than 30, we need to batch the queries
+      if (productIds.length > 30) {
+        List<ProductModel> allProducts = [];
+        // Process in batches of 30
+        for (int i = 0; i < productIds.length; i += 30) {
+          final batch = productIds.skip(i).take(30).toList();
+          final snapshot = await _db
+              .collection('Products')
+              .where(FieldPath.documentId, whereIn: batch)
+              .get();
+          allProducts.addAll(snapshot.docs
+              .map((querySnapshot) => ProductModel.fromSnapshot(querySnapshot))
+              .toList());
+        }
+        return allProducts;
+      }
+
+      final snapshot = await _db
+          .collection('Products')
+          .where(FieldPath.documentId, whereIn: productIds)
+          .get();
+      return snapshot.docs
+          .map((querySnapshot) => ProductModel.fromSnapshot(querySnapshot))
+          .toList();
     } on FirebaseException catch (e) {
       throw RFirebaseException(e.code).message;
     } on PlatformException catch (e) {
       throw RPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again';
+      throw 'Something went wrong. Please try again: $e';
     }
   }
 
@@ -86,9 +114,11 @@ class ProductRepository extends GetxController {
     try {
       // Some datasets store Brand.Id as a number and others as a string.
       // First try string comparison; if no results, try numeric comparison.
-      Query base = _db.collection('Products').where('Brand.Id', isEqualTo: brandId);
+      Query base =
+          _db.collection('Products').where('Brand.Id', isEqualTo: brandId);
       Query altNumeric;
-      final firstSnapshot = limit == -1 ? await base.get() : await base.limit(limit).get();
+      final firstSnapshot =
+          limit == -1 ? await base.get() : await base.limit(limit).get();
 
       var docs = firstSnapshot.docs;
 
@@ -96,13 +126,17 @@ class ProductRepository extends GetxController {
         // Attempt numeric compare if brandId is numeric
         final asInt = int.tryParse(brandId);
         if (asInt != null) {
-          altNumeric = _db.collection('Products').where('Brand.Id', isEqualTo: asInt);
-          final secondSnapshot = limit == -1 ? await altNumeric.get() : await altNumeric.limit(limit).get();
+          altNumeric =
+              _db.collection('Products').where('Brand.Id', isEqualTo: asInt);
+          final secondSnapshot = limit == -1
+              ? await altNumeric.get()
+              : await altNumeric.limit(limit).get();
           docs = secondSnapshot.docs;
         }
       }
 
-      final products = docs.map((doc) => ProductModel.fromQuerySnapshot(doc)).toList();
+      final products =
+          docs.map((doc) => ProductModel.fromQuerySnapshot(doc)).toList();
 
       return products;
     } on FirebaseException catch (e) {
@@ -119,11 +153,20 @@ class ProductRepository extends GetxController {
     try {
       // Query to get all documents where productId matches the provided categoryId & Fetch limited or unlimited based on limit
       QuerySnapshot productCategoryQuery = limit == -1
-          ? await _db.collection('ProductCategory').where('categoryId', isEqualTo: categoryId).get()
-          : await _db.collection('ProductCategory').where('categoryId', isEqualTo: categoryId).limit(limit).get();
+          ? await _db
+              .collection('ProductCategory')
+              .where('categoryId', isEqualTo: categoryId)
+              .get()
+          : await _db
+              .collection('ProductCategory')
+              .where('categoryId', isEqualTo: categoryId)
+              .limit(limit)
+              .get();
 
       // Extract productIds from the documents
-      List<String> productIds = productCategoryQuery.docs.map((doc) => doc['productId'] as String).toList();
+      List<String> productIds = productCategoryQuery.docs
+          .map((doc) => doc['productId'] as String)
+          .toList();
 
       // Check if productIds list is empty to avoid 'in' filter error
       if (productIds.isEmpty) {
@@ -131,10 +174,15 @@ class ProductRepository extends GetxController {
       }
 
       // Query to get all documents where the brandId is in the list of brandIds, FieldPath.documentId to query documents in Collection
-      final productsQuery = await _db.collection('Products').where(FieldPath.documentId, whereIn: productIds).get();
+      final productsQuery = await _db
+          .collection('Products')
+          .where(FieldPath.documentId, whereIn: productIds)
+          .get();
 
       // Extract brand names or other relevant data from the documents
-      List<ProductModel> products = productsQuery.docs.map((doc) => ProductModel.fromSnapshot(doc)).toList();
+      List<ProductModel> products = productsQuery.docs
+          .map((doc) => ProductModel.fromSnapshot(doc))
+          .toList();
 
       return products;
     } on FirebaseException catch (e) {
