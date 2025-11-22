@@ -29,7 +29,7 @@ class RHomeAppBar extends StatelessWidget {
         }),
       ],
     ),
-      actions: [RCartCounterIcon(onPressed: () {}, iconColor: RColors.white)],
+      actions: [RCartCounterIcon(iconColor: RColors.white)],
     );
   }
 }

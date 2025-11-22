@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shopping_app/features/shop/controls/product/cart_controller.dart';
 import 'package:shopping_app/features/shop/screens/cart/cart.dart';
@@ -33,7 +34,7 @@ class RCartCounterIcon extends StatelessWidget {
               borderRadius: BorderRadius.circular(100),
             ),
             child: Center(
-              child: Text('2', style: Theme.of(context).textTheme.labelLarge!.apply(color: RColors.white, fontSizeFactor: 1)),
+              child: Obx(() => Text(controller.noOfCartItems.value.toString(), style: Theme.of(context).textTheme.labelLarge!.apply(color: RColors.white, fontSizeFactor: 1))),
             ),
           ),
         )

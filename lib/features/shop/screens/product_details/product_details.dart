@@ -19,18 +19,9 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Debug: Print product details
-    print('DEBUG: ProductDetailScreen - Product: ${product.title}');
-    print('DEBUG: ProductDetailScreen - ProductType: ${product.productType}');
-    print(
-        'DEBUG: ProductDetailScreen - IsVariable: ${product.productType == ProductType.variable.toString()}');
-    print(
-        'DEBUG: ProductDetailScreen - Attributes: ${product.productAttributes?.length ?? 0}');
-    print(
-        'DEBUG: ProductDetailScreen - Variations: ${product.productVariations?.length ?? 0}');
 
     return Scaffold(
-      bottomNavigationBar: RBottomAddToCart(),
+      bottomNavigationBar: RBottomAddToCart(product: product),
       body: SingleChildScrollView(
         child: Column(
           children: [

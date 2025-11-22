@@ -15,6 +15,10 @@ class CartController extends GetxController {
   RxList<CartItemModel> cartItems = <CartItemModel>[].obs;
   final variationController = VariationController.instance;
 
+  CartController() {
+    loadCartItems();
+  }
+
   // Add Item in cart
   void addToCart(ProductModel product) {
     // Quantity Check
@@ -58,6 +62,68 @@ class CartController extends GetxController {
     updateCart();
     RLoaders.customToast(message: 'Your product has been added to the Cart.');
   }
+
+  void addOneToCart(CartItemModel item) {
+    int index = cartItems.indexWhere((cartItem) => cartItem.productId == item.productId && cartItem.variationId == item.variationId);
+
+    if (index >= 0) {
+      cartItems[index].quantity += 1;
+    } else {
+      cartItems.add(item);
+    }
+
+    updateCart();
+  }
+
+  void removeOneToCart(CartItemModel item) {
+    int index = cartItems.indexWhere((cartItem) =>
+    cartItem.productId == item.productId &&
+        cartItem.variationId == item.variationId);
+
+    if (index >= 0) {
+      if (cartItems[index].quantity > 1) {
+        cartItems[index].quantity -= 1;
+      } else {
+      // Show dialog before completely removing
+      cartItems[index].quantity == 1 ? removeFromCartDialog(index) : cartItems.removeAt(index);
+      }
+
+      updateCart ();
+    }
+  }
+
+  void removeFromCartDialog(int index) {
+    Get.defaultDialog(
+      title: 'Remove Products',
+      middleText: 'Are you sure you want to remove this product?',
+      onConfirm: () {
+        // Remove the item from the cart
+        cartItems.removeAt(index);
+        updateCart();
+        RLoaders.customToast(message: 'Product Removed from the cart.');
+        Get.back();
+      },
+      onCancel: () => () => Get.back(),
+    );
+  }
+
+  /// -- Initialize already added Item's Count in the cart.
+  void updateAlreadyAddedProductCount(ProductModel product) {
+    // if product has no variation then calculate cartEntries and display total number.
+    // Else make default entries to 0 and show cartEntries when variation is selected.
+    if (product.productType == ProductType.single.toString()) {
+      productQuantityInCart.value = getProductQuantityInCart(product.id);
+    } else {
+      // Get selected variable if any..
+      final variationId = variationController.selectedVariation.value.id;
+      if (variationId.isNotEmpty) {
+        productQuantityInCart.value = getVariationQuantityInCart(product.id, variationId);
+      } else {
+        productQuantityInCart.value = 0;
+      }
+    }
+  }
+
 
   /// This function converts a ProductModel to a CartItemModel
   CartItemModel convertToCartItem(ProductModel product, int quantity) {

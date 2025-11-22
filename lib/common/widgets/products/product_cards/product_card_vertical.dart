@@ -12,6 +12,7 @@ import 'package:shopping_app/utils/constants/colors.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 import 'package:shopping_app/utils/helpers/helper_function.dart';
 import '../../../styles/shadow.dart';
+import '../../addToCartButton/add_to_cart_button.dart';
 import '../../custom_shapes/container/rounded_container.dart';
 import '../../icons/r_circular_icon.dart';
 import '../../texts/brand_title_with_verfied_icon.dart';
@@ -136,20 +137,7 @@ class RProductCardVertical extends StatelessWidget {
                 ),
 
                 /// Add to Cart Button
-                Container(
-                  decoration: BoxDecoration(
-                    color: RColors.dark,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(RSizes.cardRadiusMd),
-                      bottomRight: Radius.circular(RSizes.productImageRadius),
-                    ),
-                  ),
-                  child: SizedBox(
-                      width: RSizes.iconLg * 1.2,
-                      height: RSizes.iconLg * 1.2,
-                      child: Center(
-                          child: Icon(Iconsax.add, color: RColors.white))),
-                )
+                ProductCardAddToCartButton(product: product),
               ],
             )
           ],

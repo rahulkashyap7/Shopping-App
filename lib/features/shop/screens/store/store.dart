@@ -33,7 +33,7 @@ class StoreScreen extends StatelessWidget {
           title:
               Text('Store', style: Theme.of(context).textTheme.headlineMedium),
           actions: [
-            RCartCounterIcon(onPressed: () {}),
+            RCartCounterIcon(),
           ],
         ),
         body: NestedScrollView(
