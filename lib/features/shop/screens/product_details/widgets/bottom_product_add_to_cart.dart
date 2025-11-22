@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shopping_app/common/widgets/icons/r_circular_icon.dart';
 import 'package:shopping_app/features/shop/controls/product/cart_controller.dart';
@@ -15,6 +17,7 @@ class RBottomAddToCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = CartController.instance;
+    controller.updateAlreadyAddedProductCount(product);
     final dark = RHelperFunctions.isDarkMode(context);
 
     return Container(
@@ -26,40 +29,42 @@ class RBottomAddToCart extends StatelessWidget {
           topRight: Radius.circular(RSizes.cardRadiusLg),
         )
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              RCircularIcon(icon: Iconsax.minus,
-              backgroundColor: RColors.darkGrey,
-                width: 40,
-                height: 40,
-                color: RColors.white,
-                onPressed: () => controller.productQuantityInCart.value > 1 ? null : controller.productQuantityInCart.value -= 1,
-              ),
-              const SizedBox(width: RSizes.spaceBtwItems),
-              Text(controller.productQuantityInCart.value.toString(), style: Theme.of(context).textTheme.titleSmall),
-              const SizedBox(width: RSizes.spaceBtwItems),
+      child: Obx(
+        () => Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+                children: [
+                  RCircularIcon(icon: Iconsax.minus,
+                  backgroundColor: RColors.darkGrey,
+                    width: 40,
+                    height: 40,
+                    color: RColors.white,
+                    onPressed: () => controller.productQuantityInCart.value > 1 ? null : controller.productQuantityInCart.value -= 1,
+                  ),
+                  const SizedBox(width: RSizes.spaceBtwItems),
+                  Text(controller.productQuantityInCart.value.toString(), style: Theme.of(context).textTheme.titleSmall),
+                  const SizedBox(width: RSizes.spaceBtwItems),
 
-              RCircularIcon(icon: Iconsax.add,
-                backgroundColor: RColors.black,
-                width: 40,
-                height: 40,
-                color: RColors.white,
-                onPressed: () => controller.productQuantityInCart.value += 1,
+                  RCircularIcon(icon: Iconsax.add,
+                    backgroundColor: RColors.black,
+                    width: 40,
+                    height: 40,
+                    color: RColors.white,
+                    onPressed: () => controller.productQuantityInCart.value += 1,
+                  ),
+                ],
               ),
-            ],
-          ),
-          ElevatedButton(onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.all(RSizes.md),
-              backgroundColor: RColors.black,
-              side: BorderSide(color: RColors.black),
-            ),
-            child: Text('Add to Cart'),
-          )
-        ],
+            ElevatedButton(onPressed: controller.productQuantityInCart.value < 1 ? null : () => controller.addToCart(product),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(RSizes.md),
+                backgroundColor: RColors.black,
+                side: BorderSide(color: RColors.black),
+              ),
+              child: Text('Add to Cart'),
+            )
+          ],
+        ),
       ),
     );
   }
