@@ -49,6 +49,11 @@ class RCircularImage extends StatelessWidget {
   }
 
   Widget _buildImageWidget() {
+    // Check if image path is empty
+    if (image.isEmpty) {
+      return Icon(Icons.image_not_supported, color: overlayColor);
+    }
+
     if (isNetworkImage) {
       return CachedNetworkImage(
         fit: fit,

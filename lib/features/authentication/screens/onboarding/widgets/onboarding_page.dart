@@ -24,7 +24,9 @@ class OnBoardingPage extends StatelessWidget {
       padding: const EdgeInsets.all(RSizes.defaultSpace),
       child: Column(
         children: [
-          if (isLottieAsset)
+          if (image.isEmpty)
+            Icon(Icons.image_not_supported, size: assetWidth)
+          else if (isLottieAsset)
             Lottie.asset(
               image,
               width: assetWidth,

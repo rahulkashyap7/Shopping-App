@@ -46,20 +46,23 @@ class RRoundedImage extends StatelessWidget {
           borderRadius: applyImageRadius
               ? BorderRadius.circular(borderRadius)
               : BorderRadius.zero,
-          child: isNetworkImage
-              ? CachedNetworkImage(
-                  fit: fit,
-                  imageUrl: imageUrl,
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      RShimmerEffect(
-                          width: width ?? double.infinity,
-                          height: height ?? 158),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                )
-              : Image(
-                  fit: fit,
-                  image: AssetImage(imageUrl),
-                ),
+          child: imageUrl.isEmpty
+              ? const Icon(Icons.image_not_supported)
+              : isNetworkImage
+                  ? CachedNetworkImage(
+                      fit: fit,
+                      imageUrl: imageUrl,
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => RShimmerEffect(
+                              width: width ?? double.infinity,
+                              height: height ?? 158),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    )
+                  : Image(
+                      fit: fit,
+                      image: AssetImage(imageUrl),
+                    ),
         ),
       ),
     );

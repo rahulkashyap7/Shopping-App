@@ -1,13 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:shopping_app/common/widgets/products/favourite_icon/favourite_icon.dart';
 import 'package:shopping_app/features/shop/controls/product/images_controller.dart';
 import 'package:shopping_app/features/shop/models/product_model.dart';
 import '../../../../../common/widgets/appbar/appbar.dart';
 import '../../../../../common/widgets/custom_shapes/curved_edges/curved_edges_widget/curved_edges_widgets.dart';
-import '../../../../../common/widgets/icons/r_circular_icon.dart';
 import '../../../../../common/widgets/images/R_rounded_image.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
@@ -40,6 +38,9 @@ class RProductImageSlider extends StatelessWidget {
                   padding: EdgeInsets.all(RSizes.productImageRadius * 2),
                   child: Center(child: Obx(() {
                     final image = controller.selectedProductImage.value;
+                    if (image.isEmpty) {
+                      return const Icon(Icons.image_not_supported, size: 100);
+                    }
                     return GestureDetector(
                       onTap: () => controller.showEnlargedImage(image),
                       child: CachedNetworkImage(
@@ -67,15 +68,20 @@ class RProductImageSlider extends StatelessWidget {
                   separatorBuilder: (_, __) =>
                       const SizedBox(width: RSizes.spaceBtwItems),
                   itemBuilder: (_, index) => Obx(() {
-                    final imageSelected = controller.selectedProductImage.value == images[index];
+                    final imageSelected =
+                        controller.selectedProductImage.value == images[index];
                     return RRoundedImage(
                       width: 80,
                       isNetworkImage: true,
                       imageUrl: images[index],
                       padding: EdgeInsets.all(RSizes.sm),
                       backgroundColor: dark ? RColors.dark : RColors.white,
-                      onPressed: () => controller.selectedProductImage.value = images[index],
-                      border: Border.all(color: imageSelected ? RColors.primary : Colors.transparent),
+                      onPressed: () =>
+                          controller.selectedProductImage.value = images[index],
+                      border: Border.all(
+                          color: imageSelected
+                              ? RColors.primary
+                              : Colors.transparent),
                     );
                   }),
                 ),

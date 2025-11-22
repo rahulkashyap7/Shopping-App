@@ -15,22 +15,24 @@ class ImagesController extends GetxController {
     // Use set to add unique images only
     Set<String> images = {};
 
-    // load thumbnail image
-    images.add(product.thumbnail);
-
-    // Assign thumbnail as Selected image
-    selectedProductImage.value = product.thumbnail;
+    // load thumbnail image (only if not empty)
+    if (product.thumbnail.isNotEmpty) {
+      images.add(product.thumbnail);
+      // Assign thumbnail as Selected image
+      selectedProductImage.value = product.thumbnail;
+    }
 
     // Get all images from the product Model if not null
     if (product.images != null) {
-      images.addAll(product.images!);
+      images.addAll(product.images!.where((img) => img.isNotEmpty));
     }
 
     // Get all images from the product variations if not null
-    if (product.productVariations != null ||
+    if (product.productVariations != null &&
         product.productVariations!.isNotEmpty) {
-      images.addAll(
-          product.productVariations!.map((variation) => variation.image));
+      images.addAll(product.productVariations!
+          .map((variation) => variation.image)
+          .where((img) => img.isNotEmpty));
     }
 
     return images.toList();
@@ -38,6 +40,9 @@ class ImagesController extends GetxController {
 
   /// -- Show Image Popup
   void showEnlargedImage(String image) {
+    if (image.isEmpty) {
+      return;
+    }
     Get.to(
       fullscreenDialog: true,
       () => Dialog.fullscreen(
