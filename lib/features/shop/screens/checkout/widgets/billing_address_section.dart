@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/common/widgets/texts/section_heading.dart';
+import 'package:shopping_app/features/personalization/controls/address_controller.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 
 class RBillingAddressSection extends StatelessWidget {
@@ -7,28 +8,35 @@ class RBillingAddressSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final addressController = AddressController.instance;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        RSectionHeading(title: 'Shipping Address', buttonTitle: 'Change', onPressed: () {}),
-        Text('Coding with Rahul', style: Theme.of(context).textTheme.bodyLarge),
-        const SizedBox(height: RSizes.spaceBtwItems / 2),
+        RSectionHeading(title: 'Shipping Address', buttonTitle: 'Change', onPressed: () => addressController.selectNewAddressPopup(context)),
+        addressController.selectedAddress.value.id.isNotEmpty ?
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Coding with Rahul', style: Theme.of(context).textTheme.bodyLarge),
+            const SizedBox(height: RSizes.spaceBtwItems / 2),
 
-        Row(
-          children: [
-            const Icon(Icons.phone, color: Colors.grey, size: 16),
-            const SizedBox(width: RSizes.spaceBtwItems),
-            Text('+91-123-4567890', style: Theme.of(context).textTheme.bodyMedium),
+            Row(
+              children: [
+                const Icon(Icons.phone, color: Colors.grey, size: 16),
+                const SizedBox(width: RSizes.spaceBtwItems),
+                Text('+91-123-4567890', style: Theme.of(context).textTheme.bodyMedium),
+              ],
+            ),
+            const SizedBox(height: RSizes.spaceBtwItems / 2),
+            Row(
+              children: [
+                const Icon(Icons.location_history, color: Colors.grey, size: 16),
+                const SizedBox(width: RSizes.spaceBtwItems),
+                Expanded(child: Text('South Liana, Marine 87695, USA', style: Theme.of(context).textTheme.bodyMedium, softWrap: true)),
+              ],
+            ),
           ],
-        ),
-        const SizedBox(height: RSizes.spaceBtwItems / 2),
-        Row(
-          children: [
-            const Icon(Icons.location_history, color: Colors.grey, size: 16),
-            const SizedBox(width: RSizes.spaceBtwItems),
-            Expanded(child: Text('South Liana, Marine 87695, USA', style: Theme.of(context).textTheme.bodyMedium, softWrap: true)),
-          ],
-        ),
+        ) : Text('Select Address', style: Theme.of(context).textTheme.bodyMedium),
       ],
     );
   }
