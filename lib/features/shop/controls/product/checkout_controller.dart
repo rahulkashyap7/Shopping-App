@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shopping_app/common/widgets/texts/section_heading.dart';
 import 'package:shopping_app/utils/constants/image_strings.dart';
@@ -9,7 +9,8 @@ import '../../models/payment_method_model.dart';
 class CheckoutController extends GetxController {
   static CheckoutController get instance => Get.find();
 
-  final Rx<PaymentMethodModel> selectedPaymentMethod = PaymentMethodModel.empty().obs;
+  final Rx<PaymentMethodModel> selectedPaymentMethod =
+      PaymentMethodModel.empty().obs;
 
   @override
   void onInit() {
@@ -19,7 +20,7 @@ class CheckoutController extends GetxController {
   }
 
   Future<dynamic> selectPaymentMethod(BuildContext context) {
-    return showModelBottomSheet(
+    return showModalBottomSheet(
         context: context,
         builder: (_) => SingleChildScrollView(
               child: Container(

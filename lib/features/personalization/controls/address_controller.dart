@@ -7,6 +7,7 @@ import 'package:shopping_app/features/personalization/models/address_model.dart'
 import 'package:shopping_app/features/personalization/screens/address/add_new_address.dart';
 import 'package:shopping_app/features/personalization/screens/address/widgets/single_address.dart';
 import 'package:shopping_app/utils/check_conncetion/network_manager.dart';
+import 'package:shopping_app/utils/constants/colors.dart';
 import 'package:shopping_app/utils/constants/image_strings.dart';
 import 'package:shopping_app/utils/constants/sizes.dart';
 import 'package:shopping_app/utils/helpers/cloud_helper_function.dart';
@@ -132,44 +133,58 @@ class AddressController extends GetxController {
       RLoaders.errorSnackBar(title: 'Address Not Found', message: e.toString());
     }
   }
-  
+
   /// Show Addresses ModalBottomSheet at checkOut
   Future<dynamic> selectNewAddressPopup(BuildContext context) {
+    final dark = Theme.of(context).brightness == Brightness.dark;
     return showAdaptiveDialog(
         context: context,
-        builder: (_) => Container(
-              padding: EdgeInsets.all(RSizes.lg),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  RSectionHeading(title: 'Select Address', showActionButton: false),
-                  FutureBuilder(
-                      future: getAllUserAddress(),
-                      builder: (_, snapshot) {
-                        /// Helper Function: Handle Loader, No Record, Or Error Message
-                        final response =
-                            RCloudHelperFunction.checkMultiRecordState(
-                                snapshot: snapshot);
-                        if (response != null) return response;
+        builder: (_) => Material(
+              color: Colors.transparent,
+              child: Container(
+                padding: EdgeInsets.all(RSizes.lg),
+                decoration: BoxDecoration(
+                  color: dark ? RColors.dark : RColors.white,
+                  borderRadius: BorderRadius.circular(RSizes.cardRadiusLg),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RSectionHeading(
+                        title: 'Select Address', showActionButton: false),
+                    Flexible(
+                      child: FutureBuilder(
+                          future: getAllUserAddress(),
+                          builder: (_, snapshot) {
+                            /// Helper Function: Handle Loader, No Record, Or Error Message
+                            final response =
+                                RCloudHelperFunction.checkMultiRecordState(
+                                    snapshot: snapshot);
+                            if (response != null) return response;
 
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (_, index) => RSingleAddress(
-                            address: snapshot.data![index],
-                            onTap: () async {
-                              await selectedAddress(snapshot.data![index]);
-                              Get.back();
-                            },
-                          ),
-                        );
-                      }),
-                  const SizedBox(height: RSizes.defaultSpace * 2),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(onPressed: () => Get.to(() => AddNewAddressScreen()), child: Text('Add new address')),
-                  )
-                ],
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (_, index) => RSingleAddress(
+                                address: snapshot.data![index],
+                                onTap: () async {
+                                  await selectAddress(snapshot.data![index]);
+                                  Get.back();
+                                },
+                              ),
+                            );
+                          }),
+                    ),
+                    const SizedBox(height: RSizes.defaultSpace * 2),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                          onPressed: () => Get.to(() => AddNewAddressScreen()),
+                          child: Text('Add new address')),
+                    )
+                  ],
+                ),
               ),
             ));
   }
