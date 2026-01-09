@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../features/shop/models/brand_model.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/enums.dart';
-import '../../../utils/constants/image_strings.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_function.dart';
 import '../custom_shapes/container/rounded_container.dart';
