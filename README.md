@@ -1,72 +1,114 @@
-# Shopping App UI
+# 🛍️ Shopping App UI (Flutter)
 
-## Project Banner
-![Project Banner](https://ik.imagekit.io/ueehn2njt/Shopping%20App/projectBanner.png)
-## Onboarding Screen
-![OnBoarding Screen](https://ik.imagekit.io/ueehn2njt/Shopping%20App/1.png)
-## Login & Docer Animaton
-![Login & Docer](https://ik.imagekit.io/ueehn2njt/Shopping%20App/loginand%20Docer.png)
-## Screens
-![Screens](https://ik.imagekit.io/ueehn2njt/Shopping%20App/3.png)
-![More Screens](https://ik.imagekit.io/ueehn2njt/Shopping%20App/4.png)
-## Light And dark Mode
-![Dark and light Mode](https://ik.imagekit.io/ueehn2njt/Shopping%20App/Add%20a%20heading.png)
+A modern **Flutter e-commerce UI application** with premium design elements, smooth animations, and support for **Light & Dark themes**.  
+This project focuses on **UI/UX, animations, and scalable screen architecture**.
 
-## All Brands Are Fetching Screen
-![All Brand Fetching](https://ik.imagekit.io/ueehn2njt/Shopping%20App/Fetching%20All%20Brands.png)
+---
 
-## Cart & Order Management
-![All Brand Fetching](https://ik.imagekit.io/ueehn2njt/Shopping%20App/Wishlist%20screen.png)
+## 📥 App Download
 
-A modern Flutter implementation of e-commerce UI with premium design elements and smooth interactions.
+👉 **APK / App Link:**  
+https://drive.google.com/file/d/1CjnpwUkV3WmDid4FZYOvYAkiZCFfxiU4/view?usp=sharing
+
+> ⚠️ Enable “Install from unknown sources” if prompted (Android).
+
+---
+
+## 🖼️ Project Banner
+
+<p align="center">
+  <img src="https://ik.imagekit.io/ueehn2njt/Shopping%20App/projectBanner.png" width="600"/>
+</p>
+
+---
+
+## 📸 App Screenshots
+
+### Onboarding & Authentication
+
+<p align="center">
+  <img src="https://ik.imagekit.io/ueehn2njt/Shopping%20App/1.png" width="250"/>
+  <img src="https://ik.imagekit.io/ueehn2njt/Shopping%20App/loginand%20Docer.png" width="250"/>
+</p>
+
+---
+
+### Main Screens & Navigation
+
+<p align="center">
+  <img src="https://ik.imagekit.io/ueehn2njt/Shopping%20App/3.png" width="250"/>
+  <img src="https://ik.imagekit.io/ueehn2njt/Shopping%20App/4.png" width="250"/>
+</p>
+
+---
+
+### Light & Dark Mode
+
+<p align="center">
+  <img src="https://ik.imagekit.io/ueehn2njt/Shopping%20App/Add%20a%20heading.png" width="350"/>
+</p>
+
+---
+
+### Brands & Product Listing
+
+<p align="center">
+  <img src="https://ik.imagekit.io/ueehn2njt/Shopping%20App/Fetching%20All%20Brands.png" width="300"/>
+</p>
+
+---
+
+### Cart & Order Management
+
+<p align="center">
+  <img src="https://ik.imagekit.io/ueehn2njt/Shopping%20App/Wishlist%20screen.png" width="300"/>
+</p>
+
+---
 
 ## ✨ Features
-- Authentication flow screens (Login/Signup)
-- Product catalog with grid/list views
-- Product detail pages with image galleries
-- Shopping cart functionality
-- User profile management
-- Dark/Light theme support
-- Responsive layout for multiple screen sizes
-- Custom animations and transitions
+
+- Authentication flow screens (Login / Signup)
+- Premium onboarding experience
+- Product catalog with grid & list views
+- Product detail screens with image galleries
+- Shopping cart & wishlist UI
+- User profile screens
+- Light & Dark theme support
+- Responsive layouts for multiple screen sizes
+- Smooth animations & transitions
+
+---
 
 ## 📱 Supported Platforms
-- Android
-- iOS
 
+- Android  
+- iOS  
+
+---
 
 ## 🛠️ Project Structure
 
 Key directories:
-- `lib/features/`: Contains isolated feature modules
-- `lib/common/`: Shared components and styles
-- `assets/images/`: Organized by image type and purpose
-- Platform directories: Android/iOS/Web specific configurations
+
+- `lib/features/` – Feature-based modules
+- `lib/common/` – Shared widgets & styles
+- `assets/images/` – Organized UI assets
+- Platform folders – Android / iOS configs
+
+---
 
 ## ⚙️ Prerequisites
-- Flutter 3.0+
-- Dart 3.0+
-- Android Studio/VSCode
+
+- Flutter **3.0+**
+- Dart **3.0+**
+- Android Studio or VS Code
 - Xcode (for iOS builds)
 
+---
+
 ## 🚀 Installation
-1. Clone the repository
+
+1️⃣ Clone the repository
 ```bash
 git clone https://github.com/rahulkashyap7/shopping_app.git
-
-2. Install dependencies
-```bash
-flutter pub run build_runner build
-```
-3. Run the app
-```bash
-flutter run
-```
-
-
-Customization points:
-1. Replace `app_banner.png` with your actual banner
-2. Add real screenshots under ## Features
-3. Update license information if needed
-4. Add contribution guidelines section if open-sourcing
-
